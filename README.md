@@ -14,7 +14,24 @@ This repository contains interactive study materials covering all aspects of con
 
 ## 🚀 Quick Start
 
-### Option 1: View Online (Recommended)
+### Option 1: GitHub Codespace (Easiest - No Setup Required!) ☁️
+**Click the "Open in Codespace" button in `practice.html` to start coding instantly!**
+
+Opens a fully-configured cloud development environment with:
+- ✅ GCC compiler pre-installed
+- ✅ VS Code with C/C++ extensions
+- ✅ All exercise files ready to edit
+- ✅ Terminal access for compiling and running
+- ✅ No local installation needed!
+
+**How to use:**
+1. Click "Open in Codespace" button (green button next to ZIP download)
+2. Wait ~1 minute for environment to load
+3. Navigate to `Exercises/Exercise_01/`
+4. Edit `exercise_1.c` and compile with: `gcc exercise_1.c -o exercise_1`
+5. Run with: `./exercise_1`
+
+### Option 2: View Online (Best for Learning Theory)
 Simply open any `.html` file in your web browser to start learning!
 
 1. Download or clone this repository
@@ -23,12 +40,13 @@ Simply open any `.html` file in your web browser to start learning!
 4. Test yourself with `practice.html` exercises
 5. Complete the `quiz.html` to assess your knowledge
 
-### Option 2: Download Exercise Files
+### Option 3: Download Exercise Files (Local Development)
 - Extract `Exercises.zip` to get starter code with TODO comments
 - Each exercise folder contains:
   - `README.md` with instructions
   - Starter `.c` file with structure and comments
   - Reference to solution in `practice.html`
+- Requires: GCC compiler installed on your machine
 
 ## 📖 Topics Covered
 

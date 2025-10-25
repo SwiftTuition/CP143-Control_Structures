@@ -1,0 +1,36 @@
+{
+  "name": "CP143 Control Structures - C Development",
+  "image": "mcr.microsoft.com/devcontainers/cpp:ubuntu",
+
+  "features": {
+    "ghcr.io/devcontainers/features/common-utils:2": {
+      "installZsh": true,
+      "upgradePackages": true
+    }
+  },
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-vscode.cpptools",
+        "ms-vscode.cpptools-extension-pack",
+        "ms-vscode.cmake-tools",
+        "jeff-hykin.better-c-syntax",
+        "twxs.cmake"
+      ],
+      "settings": {
+        "C_Cpp.default.cStandard": "c11",
+        "C_Cpp.default.compilerPath": "/usr/bin/gcc",
+        "editor.formatOnSave": true,
+        "files.associations": {
+          "*.c": "c",
+          "*.h": "c"
+        }
+      }
+    }
+  },
+
+  "postCreateCommand": "gcc --version && echo '✅ C Development Environment Ready!'",
+
+  "remoteUser": "vscode"
+}
