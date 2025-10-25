@@ -1,0 +1,1346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control Structures - Examples | Swift Tuition CP143</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Cascadia+Code:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <!-- CodeMirror for interactive playground -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/theme/material-ocean.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/clike/clike.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #e2e8f0;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 2px solid #0ea5e9;
+        }
+
+        .nav-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #0ea5e9;
+        }
+
+        .nav-brand img {
+            height: 40px;
+            width: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #0ea5e9;
+            box-shadow: 0 2px 8px rgba(14, 165, 233, 0.3);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #cbd5e1;
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: #0ea5e9;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .content-card {
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(14, 165, 233, 0.2);
+        }
+
+        h1 {
+            color: #0ea5e9;
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        h2 {
+            color: #38bdf8;
+            font-size: 2rem;
+            margin: 2rem 0 1rem 0;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid rgba(14, 165, 233, 0.3);
+        }
+
+        h3 {
+            color: #7dd3fc;
+            font-size: 1.5rem;
+            margin: 1.5rem 0 1rem 0;
+        }
+
+        h4 {
+            color: #bae6fd;
+            font-size: 1.2rem;
+            margin: 1rem 0 0.5rem 0;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            color: #cbd5e1;
+        }
+
+        .info-box {
+            background: rgba(14, 165, 233, 0.1);
+            border-left: 4px solid #0ea5e9;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .info-box p {
+            margin-bottom: 0.5rem;
+        }
+
+        .warning-box {
+            background: rgba(239, 68, 68, 0.1);
+            border-left: 4px solid #ef4444;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .success-box {
+            background: rgba(16, 185, 129, 0.1);
+            border-left: 4px solid #10b981;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .tip-box {
+            background: rgba(168, 85, 247, 0.1);
+            border-left: 4px solid #a855f7;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        /* CODE PLAYGROUND COMPONENT */
+        .code-playground {
+            background: #1e293b;
+            border-radius: 12px;
+            overflow: hidden;
+            margin: 2rem 0;
+            border: 1px solid #334155;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .playground-header {
+            background: #0f172a;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #334155;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .playground-title {
+            color: #0ea5e9;
+            font-weight: 600;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .playground-title::before {
+            content: "⚡";
+            font-size: 1.2rem;
+        }
+
+        .playground-actions {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .run-btn {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            border: none;
+            padding: 0.6rem 1.5rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .run-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+        }
+
+        .run-btn:disabled {
+            background: #64748b;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .run-btn::before {
+            content: "▶";
+            font-size: 1rem;
+        }
+
+        .reset-btn {
+            background: #64748b;
+            color: white;
+            border: none;
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .reset-btn:hover {
+            background: #475569;
+            transform: translateY(-2px);
+        }
+
+        .loading-indicator {
+            display: none;
+            color: #eab308;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .loading-indicator.active {
+            display: block;
+        }
+
+        .playground-editor {
+            background: #0c1222;
+            height: 400px;
+        }
+
+        .CodeMirror {
+            height: 400px;
+            font-family: 'Cascadia Code', 'Courier New', monospace;
+            font-size: 14px;
+        }
+
+        .playground-output {
+            background: #0f172a;
+            padding: 1.5rem;
+            border-top: 1px solid #334155;
+            min-height: 120px;
+        }
+
+        .output-label {
+            color: #64748b;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.75rem;
+        }
+
+        .output-text {
+            font-family: 'Cascadia Code', 'Courier New', monospace;
+            font-size: 0.9rem;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            padding: 1rem;
+            border-radius: 6px;
+            border: 1px solid #334155;
+        }
+
+        .output-placeholder {
+            background: #1e293b;
+            color: #64748b;
+        }
+
+        .output-success {
+            background: #142d1f;
+            color: #10b981;
+            border-color: #10b981;
+        }
+
+        .output-error {
+            background: #2d1414;
+            color: #ef4444;
+            border-color: #ef4444;
+        }
+
+        .output-info {
+            color: #cbd5e1;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .callout-success {
+            background: #142d1f;
+            border-left: 5px solid #10b981;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 6px;
+        }
+
+        .callout-success strong {
+            color: #10b981;
+        }
+
+        ul, ol {
+            margin: 1rem 0 1rem 2rem;
+            color: #cbd5e1;
+        }
+
+        li {
+            margin: 0.5rem 0;
+        }
+
+        .example-header {
+            background: rgba(14, 165, 233, 0.1);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 2rem 0 1rem 0;
+            border-left: 4px solid #0ea5e9;
+        }
+
+        .example-header h3 {
+            margin: 0 0 0.5rem 0;
+        }
+
+        .example-objectives {
+            color: #94a3b8;
+            font-size: 0.95rem;
+        }
+
+        @media (max-width: 768px) {
+            .nav-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                gap: 0.5rem;
+                text-align: center;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .container {
+                padding: 0 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-content">
+            <div class="nav-brand">
+                <img src="swift_tuition_logo.png" alt="Swift Tuition Logo">
+                <span>CP143: Control Structures</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="theory.html">Theory</a></li>
+                <li><a href="examples.html">Examples</a></li>
+                <li><a href="practice.html">Practice</a></li>
+                <li><a href="quiz.html">Quiz</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="content-card">
+            <h1>Control Structures: Complete Examples</h1>
+
+            <div class="info-box">
+                <p><strong>Module:</strong> Control Structures - Selection & Repetition</p>
+                <p><strong>What you'll build:</strong> 7 complete programs demonstrating all control structures in real-world scenarios</p>
+                <p><strong>Skills covered:</strong> Decision making, loops, input validation, pattern generation, menu systems, and nested structures</p>
+            </div>
+
+            <p>Good day, good people.</p>
+
+            <p>You've learned the theory behind control structures. Now it's time to see them in action. These examples show complete working programs that solve real problems. Each example builds on the concepts from theory and demonstrates how to combine control structures effectively.</p>
+
+            <p>Every example is interactive - you can run the code, modify it, and see what happens. Don't just read - experiment! Change values, add features, break things and fix them. That's how you truly learn.</p>
+
+            <!-- Example 1 -->
+            <div class="example-header">
+                <h3>Example 1: Grade Classifier</h3>
+                <p class="example-objectives"><strong>Concepts:</strong> Nested if...else, relational operators, input/output</p>
+                <p class="example-objectives"><strong>Purpose:</strong> Convert numerical grades to letter grades with pass/fail status</p>
+            </div>
+
+            <h4>The Problem</h4>
+            <p>You need to write a program that reads a student's numerical grade (0-100) and outputs:</p>
+            <ul>
+                <li>The letter grade (A, B, C, D, or F)</li>
+                <li>Whether the student passed or failed</li>
+                <li>An encouraging message based on performance</li>
+            </ul>
+
+            <h4>The Solution</h4>
+
+            <div class="code-playground" id="playground1">
+                <div class="playground-header">
+                    <div class="playground-title">Grade Classifier Program</div>
+                    <div class="playground-actions">
+                        <span class="loading-indicator" id="loading1">Compiling...</span>
+                        <button class="run-btn" onclick="runCode('playground1')">Run Code</button>
+                        <button class="reset-btn" onclick="resetCode('playground1')">Reset</button>
+                    </div>
+                </div>
+                <div class="playground-editor">
+                    <textarea id="editor1">
+#include <stdio.h>
+
+int main() {
+    int grade;
+    char letter;
+
+    printf("=== Grade Classifier ===\n");
+    printf("Enter student grade (0-100): ");
+    scanf("%d", &grade);
+
+    // Input validation
+    if (grade < 0 || grade > 100) {
+        printf("Error: Grade must be between 0 and 100.\n");
+        return 1;
+    }
+
+    // Determine letter grade using nested if...else
+    if (grade >= 80) {
+        letter = 'A';
+        printf("\nLetter Grade: %c\n", letter);
+        printf("Status: PASSED\n");
+        printf("Excellent work! Keep it up!\n");
+    } else if (grade >= 70) {
+        letter = 'B';
+        printf("\nLetter Grade: %c\n", letter);
+        printf("Status: PASSED\n");
+        printf("Good job! Well done!\n");
+    } else if (grade >= 60) {
+        letter = 'C';
+        printf("\nLetter Grade: %c\n", letter);
+        printf("Status: PASSED\n");
+        printf("You passed. Keep working hard!\n");
+    } else if (grade >= 50) {
+        letter = 'D';
+        printf("\nLetter Grade: %c\n", letter);
+        printf("Status: PASSED\n");
+        printf("You passed, but aim higher next time!\n");
+    } else {
+        letter = 'F';
+        printf("\nLetter Grade: %c\n", letter);
+        printf("Status: FAILED\n");
+        printf("Don't give up! Review the material and try again.\n");
+    }
+
+    return 0;
+}
+</textarea>
+                </div>
+                <div class="playground-output">
+                    <div class="output-label">Output</div>
+                    <div class="output-text output-placeholder">Click "Run Code" to compile and execute...</div>
+                </div>
+            </div>
+
+            <h4>How It Works</h4>
+            <ol>
+                <li><strong>Input validation:</strong> Check if grade is in valid range (0-100)</li>
+                <li><strong>Nested if...else ladder:</strong> Test from highest grade downward</li>
+                <li><strong>Order matters:</strong> Once a condition is true, remaining conditions are skipped</li>
+                <li><strong>Personalized feedback:</strong> Different messages based on performance</li>
+            </ol>
+
+            <div class="callout-success">
+                <strong>Try it:</strong> Modify the code to add A+ (90-100) and A (80-89). What conditions would you need to change?
+            </div>
+
+            <!-- Example 2 -->
+            <div class="example-header">
+                <h3>Example 2: Calculator Menu System</h3>
+                <p class="example-objectives"><strong>Concepts:</strong> switch statement, do...while loop, modular design</p>
+                <p class="example-objectives"><strong>Purpose:</strong> Create an interactive calculator with a menu that repeats until the user quits</p>
+            </div>
+
+            <h4>The Problem</h4>
+            <p>Build a calculator that:</p>
+            <ul>
+                <li>Displays a menu of operations (+, -, *, /, %)</li>
+                <li>Performs the selected operation on two numbers</li>
+                <li>Repeats until the user chooses to quit</li>
+                <li>Handles division by zero</li>
+            </ul>
+
+            <h4>The Solution</h4>
+
+            <div class="code-playground" id="playground2">
+                <div class="playground-header">
+                    <div class="playground-title">Calculator Menu System</div>
+                    <div class="playground-actions">
+                        <span class="loading-indicator" id="loading2">Compiling...</span>
+                        <button class="run-btn" onclick="runCode('playground2')">Run Code</button>
+                        <button class="reset-btn" onclick="resetCode('playground2')">Reset</button>
+                    </div>
+                </div>
+                <div class="playground-editor">
+                    <textarea id="editor2">
+#include <stdio.h>
+
+int main() {
+    double num1, num2, result;
+
+    printf("=== Simple Calculator ===\n\n");
+    printf("This demo shows several calculations.\n");
+    printf("In a real program, you'd use a menu loop with scanf.\n\n");
+
+    // Example 1: Addition
+    printf("--- Example 1: Addition ---\n");
+    num1 = 15.5;
+    num2 = 7.3;
+    result = num1 + num2;
+    printf("%.2f + %.2f = %.2f\n\n", num1, num2, result);
+
+    // Example 2: Subtraction
+    printf("--- Example 2: Subtraction ---\n");
+    num1 = 20.0;
+    num2 = 8.5;
+    result = num1 - num2;
+    printf("%.2f - %.2f = %.2f\n\n", num1, num2, result);
+
+    // Example 3: Multiplication
+    printf("--- Example 3: Multiplication ---\n");
+    num1 = 4.0;
+    num2 = 3.5;
+    result = num1 * num2;
+    printf("%.2f * %.2f = %.2f\n\n", num1, num2, result);
+
+    // Example 4: Division
+    printf("--- Example 4: Division ---\n");
+    num1 = 15.0;
+    num2 = 4.0;
+    result = num1 / num2;
+    printf("%.2f / %.2f = %.2f\n\n", num1, num2, result);
+
+    // Example 5: Division by zero (error handling)
+    printf("--- Example 5: Division by zero ---\n");
+    num1 = 10.0;
+    num2 = 0.0;
+    if (num2 == 0) {
+        printf("%.2f / %.2f = Error: Division by zero!\n\n", num1, num2);
+    } else {
+        result = num1 / num2;
+        printf("%.2f / %.2f = %.2f\n\n", num1, num2, result);
+    }
+
+    // Example 6: Modulus
+    printf("--- Example 6: Modulus ---\n");
+    int int1 = 17;
+    int int2 = 5;
+    int mod_result = int1 % int2;
+    printf("%d %% %d = %d\n\n", int1, int2, mod_result);
+
+    printf("Note: In a full calculator program, you'd use:\n");
+    printf("- A do...while loop for the menu\n");
+    printf("- scanf() to get user input\n");
+    printf("- A switch statement to handle choices\n");
+
+    return 0;
+}
+</textarea>
+                </div>
+                <div class="playground-output">
+                    <div class="output-label">Output</div>
+                    <div class="output-text output-placeholder">Click "Run Code" to compile and execute...</div>
+                </div>
+            </div>
+
+            <h4>How It Works</h4>
+            <ol>
+                <li><strong>Multiple operations:</strong> Shows all calculator operations with test data</li>
+                <li><strong>switch statement:</strong> In the full version, you'd use switch for menu choices</li>
+                <li><strong>Error handling:</strong> Demonstrates division by zero checking</li>
+                <li><strong>Modulus operation:</strong> Works with integers only</li>
+            </ol>
+
+            <div class="callout-success">
+                <strong>Note:</strong> This demo version uses hardcoded values. The full interactive version would use a do...while loop with scanf() for menu choices. Try modifying the numbers to test different calculations!
+            </div>
+
+            <!-- Example 3 -->
+            <div class="example-header">
+                <h3>Example 3: Factorial Calculator</h3>
+                <p class="example-objectives"><strong>Concepts:</strong> for loop, counter-controlled repetition, input validation</p>
+                <p class="example-objectives"><strong>Purpose:</strong> Calculate factorial (n!) showing the computation process</p>
+            </div>
+
+            <h4>The Problem</h4>
+            <p>Calculate the factorial of a number (n! = n × (n-1) × (n-2) × ... × 1). For example, 5! = 5 × 4 × 3 × 2 × 1 = 120. Show each step of the calculation.</p>
+
+            <h4>The Solution</h4>
+
+            <div class="code-playground" id="playground3">
+                <div class="playground-header">
+                    <div class="playground-title">Factorial Calculator</div>
+                    <div class="playground-actions">
+                        <span class="loading-indicator" id="loading3">Compiling...</span>
+                        <button class="run-btn" onclick="runCode('playground3')">Run Code</button>
+                        <button class="reset-btn" onclick="resetCode('playground3')">Reset</button>
+                    </div>
+                </div>
+                <div class="playground-editor">
+                    <textarea id="editor3">
+#include <stdio.h>
+
+int main() {
+    // Demo mode: Using pre-filled test values
+    // In a real program, you'd use scanf("%d", &n); to get user input
+    int test_values[] = {5, 0, 10, -3};
+    int num_tests = 4;
+
+    printf("=== Factorial Calculator Demo ===\n");
+    printf("Testing with multiple values...\n");
+    printf("(To use this interactively, replace test values with scanf)\n\n");
+
+    for (int test = 0; test < num_tests; test++) {
+        int n = test_values[test];
+        long long factorial = 1;
+
+        printf("--- Test %d: n = %d ---\n", test + 1, n);
+
+        // Input validation
+        if (n < 0) {
+            printf("Error: Factorial not defined for negative numbers.\n\n");
+            continue;
+        }
+
+        // Special case: 0! = 1
+        if (n == 0) {
+            printf("0! = 1\n\n");
+            continue;
+        }
+
+        // Calculate factorial and show steps
+        printf("Calculating %d!:\n", n);
+        printf("%d! = ", n);
+
+        for (int i = n; i >= 1; i--) {
+            printf("%d", i);
+            if (i > 1) {
+                printf(" × ");
+            }
+            factorial *= i;
+        }
+
+        printf(" = %lld\n", factorial);
+
+        // Show magnitude
+        if (factorial > 1000000) {
+            printf("That's over a million!\n");
+        }
+        printf("\n");
+    }
+
+    printf("Note: To make this interactive, change the test_values array\n");
+    printf("to a single scanf() call: scanf(\"%%d\", &n);\n");
+
+    return 0;
+}
+</textarea>
+                </div>
+                <div class="playground-output">
+                    <div class="output-label">Output</div>
+                    <div class="output-text output-placeholder">Click "Run Code" to compile and execute...</div>
+                </div>
+            </div>
+
+            <h4>How It Works</h4>
+            <ol>
+                <li><strong>long long:</strong> Factorials grow huge fast - need large data type</li>
+                <li><strong>for loop:</strong> Count down from n to 1, multiplying as we go</li>
+                <li><strong>Visualization:</strong> Print the multiplication expression before showing result</li>
+                <li><strong>Edge cases:</strong> Handle 0! = 1 and negative inputs</li>
+            </ol>
+
+            <div class="tip-box">
+                <p><strong>Interesting fact:</strong> 20! = 2,432,902,008,176,640,000 (over 2 quintillion!). Factorials grow incredibly fast.</p>
+            </div>
+
+            <!-- Example 4 -->
+            <div class="example-header">
+                <h3>Example 4: Sentinel-Controlled Class Average</h3>
+                <p class="example-objectives"><strong>Concepts:</strong> while loop, sentinel value, running total, type casting</p>
+                <p class="example-objectives"><strong>Purpose:</strong> Calculate average of unknown number of grades using sentinel value</p>
+            </div>
+
+            <h4>The Problem</h4>
+            <p>Calculate the class average when you don't know how many students there are. The user enters grades one by one, and types -1 when finished.</p>
+
+            <h4>The Solution</h4>
+
+            <div class="code-playground" id="playground4">
+                <div class="playground-header">
+                    <div class="playground-title">Class Average Calculator</div>
+                    <div class="playground-actions">
+                        <span class="loading-indicator" id="loading4">Compiling...</span>
+                        <button class="run-btn" onclick="runCode('playground4')">Run Code</button>
+                        <button class="reset-btn" onclick="resetCode('playground4')">Reset</button>
+                    </div>
+                </div>
+                <div class="playground-editor">
+                    <textarea id="editor4">
+#include <stdio.h>
+
+int main() {
+    // Simulated grade data (in real program, use scanf in a loop)
+    int grades[] = {85, 72, 90, 55, 78, 92, 68, 88, 45, 95};
+    int num_grades = 10;
+
+    int total = 0;
+    int count = 0;
+    int highest = -1;
+    int lowest = 101;
+
+    printf("=== Class Average Calculator ===\n");
+    printf("Processing %d grades...\n\n", num_grades);
+
+    // Process each grade (simulating sentinel-controlled loop)
+    for (int i = 0; i < num_grades; i++) {
+        int grade = grades[i];
+        printf("Grade %d: %d\n", i + 1, grade);
+
+        // Validate grade
+        if (grade < 0 || grade > 100) {
+            printf("  ❌ Invalid grade! Skipping.\n");
+        } else {
+            total += grade;
+            count++;
+
+            // Track highest and lowest
+            if (grade > highest) {
+                highest = grade;
+            }
+            if (grade < lowest) {
+                lowest = grade;
+            }
+
+            printf("  ✓ Accepted. Running total: %d\n", total);
+        }
+    }
+
+    // Display results
+    printf("\n--- Results ---\n");
+    if (count > 0) {
+        double average = (double)total / count;
+        printf("Grades entered: %d\n", count);
+        printf("Total points: %d\n", total);
+        printf("Average: %.2f\n", average);
+        printf("Highest: %d\n", highest);
+        printf("Lowest: %d\n", lowest);
+
+        // Pass/fail analysis
+        if (average >= 50) {
+            printf("\nClass status: PASSING (average >= 50)\n");
+        } else {
+            printf("\nClass status: FAILING (average < 50)\n");
+        }
+    } else {
+        printf("No grades entered.\n");
+    }
+
+    printf("\nNote: In a real program, you'd use:\n");
+    printf("- A while loop with scanf()\n");
+    printf("- Sentinel value (-1) to signal end of input\n");
+
+    return 0;
+}
+</textarea>
+                </div>
+                <div class="playground-output">
+                    <div class="output-label">Output</div>
+                    <div class="output-text output-placeholder">Click "Run Code" to compile and execute...</div>
+                </div>
+            </div>
+
+            <h4>How It Works</h4>
+            <ol>
+                <li><strong>Array processing:</strong> Demonstrates how to process multiple values</li>
+                <li><strong>Running statistics:</strong> Tracks total, count, highest, and lowest as we go</li>
+                <li><strong>Type casting:</strong> Casts to double for accurate average calculation</li>
+                <li><strong>Input validation:</strong> Checks each grade is in valid range</li>
+                <li><strong>Comprehensive output:</strong> Shows detailed statistics</li>
+            </ol>
+
+            <div class="callout-success">
+                <strong>Try it:</strong> Modify the grades array to test with different values. In a real program, you'd use a while loop with scanf() and a sentinel value (-1) to signal end of input.
+            </div>
+
+            <!-- Example 5 -->
+            <div class="example-header">
+                <h3>Example 5: Number Guessing Game</h3>
+                <p class="example-objectives"><strong>Concepts:</strong> Nested if, while loop, logical operators, game logic</p>
+                <p class="example-objectives"><strong>Purpose:</strong> Interactive game demonstrating complex decision making</p>
+            </div>
+
+            <h4>The Problem</h4>
+            <p>Create a guessing game where the computer "thinks" of a number and the player tries to guess it. Give hints ("too high" or "too low") and limit the number of guesses.</p>
+
+            <h4>The Solution</h4>
+
+            <div class="code-playground" id="playground5">
+                <div class="playground-header">
+                    <div class="playground-title">Number Guessing Game</div>
+                    <div class="playground-actions">
+                        <span class="loading-indicator" id="loading5">Compiling...</span>
+                        <button class="run-btn" onclick="runCode('playground5')">Run Code</button>
+                        <button class="reset-btn" onclick="resetCode('playground5')">Reset</button>
+                    </div>
+                </div>
+                <div class="playground-editor">
+                    <textarea id="editor5">
+#include <stdio.h>
+
+int main() {
+    int secret = 42;  // The number to guess
+    int guess;
+    int attempts = 0;
+    int max_attempts = 7;
+
+    printf("=== Number Guessing Game ===\n");
+    printf("I'm thinking of a number between 1 and 100.\n");
+    printf("You have %d guesses. Good luck!\n\n", max_attempts);
+
+    // Game loop
+    while (attempts < max_attempts) {
+        printf("Guess #%d: ", attempts + 1);
+        scanf("%d", &guess);
+        attempts++;
+
+        // Check guess
+        if (guess == secret) {
+            printf("\n🎉 Correct! You guessed it in %d tries!\n", attempts);
+
+            // Performance rating
+            if (attempts <= 3) {
+                printf("Amazing! You're a guessing genius!\n");
+            } else if (attempts <= 5) {
+                printf("Well done! Good guessing!\n");
+            } else {
+                printf("You got it! That was close!\n");
+            }
+
+            return 0;
+        } else if (guess < secret) {
+            printf("Too low! ");
+            if (secret - guess > 20) {
+                printf("You're way off!\n");
+            } else {
+                printf("But you're getting closer!\n");
+            }
+        } else {
+            printf("Too high! ");
+            if (guess - secret > 20) {
+                printf("You're way off!\n");
+            } else {
+                printf("But you're getting closer!\n");
+            }
+        }
+
+        // Show remaining guesses
+        int remaining = max_attempts - attempts;
+        if (remaining > 0) {
+            printf("You have %d guess%s left.\n\n",
+                   remaining, remaining == 1 ? "" : "es");
+        }
+    }
+
+    // Out of guesses
+    printf("\n😞 Game Over! You've used all %d guesses.\n", max_attempts);
+    printf("The number was %d. Better luck next time!\n", secret);
+
+    return 0;
+}
+</textarea>
+                </div>
+                <div class="playground-output">
+                    <div class="output-label">Output</div>
+                    <div class="output-text output-placeholder">Click "Run Code" to compile and execute...</div>
+                </div>
+            </div>
+
+            <h4>How It Works</h4>
+            <ol>
+                <li><strong>Game loop:</strong> Continue while guesses remain and number not found</li>
+                <li><strong>Nested decisions:</strong> Check if correct, then if too high/low, then give hints</li>
+                <li><strong>Early exit:</strong> Return when correct guess found</li>
+                <li><strong>Personalized feedback:</strong> Different messages based on performance and proximity</li>
+                <li><strong>Grammar detail:</strong> "1 guess" vs "2 guesses" - attention to detail matters!</li>
+            </ol>
+
+            <div class="callout-success">
+                <strong>Challenge:</strong> Can you modify this to use a random number instead of 42? You'll need <code>#include &lt;stdlib.h&gt;</code> and <code>#include &lt;time.h&gt;</code>.
+            </div>
+
+            <!-- Example 6 -->
+            <div class="example-header">
+                <h3>Example 6: Pattern Printing with Nested Loops</h3>
+                <p class="example-objectives"><strong>Concepts:</strong> Nested for loops, pattern generation, loop control</p>
+                <p class="example-objectives"><strong>Purpose:</strong> Create various visual patterns using nested loops</p>
+            </div>
+
+            <h4>The Problem</h4>
+            <p>Use nested loops to print four different patterns: triangle, inverted triangle, diamond, and hollow square. This demonstrates loop control and pattern logic.</p>
+
+            <h4>The Solution</h4>
+
+            <div class="code-playground" id="playground6">
+                <div class="playground-header">
+                    <div class="playground-title">Pattern Generator</div>
+                    <div class="playground-actions">
+                        <span class="loading-indicator" id="loading6">Compiling...</span>
+                        <button class="run-btn" onclick="runCode('playground6')">Run Code</button>
+                        <button class="reset-btn" onclick="resetCode('playground6')">Reset</button>
+                    </div>
+                </div>
+                <div class="playground-editor">
+                    <textarea id="editor6">
+#include <stdio.h>
+
+int main() {
+    int size = 5;
+
+    printf("=== Pattern Generator ===\n\n");
+
+    // Pattern 1: Right Triangle
+    printf("Pattern 1: Right Triangle\n");
+    for (int row = 1; row <= size; row++) {
+        for (int col = 1; col <= row; col++) {
+            printf("* ");
+        }
+        printf("\n");
+    }
+
+    printf("\n");
+
+    // Pattern 2: Inverted Triangle
+    printf("Pattern 2: Inverted Triangle\n");
+    for (int row = size; row >= 1; row--) {
+        for (int col = 1; col <= row; col++) {
+            printf("* ");
+        }
+        printf("\n");
+    }
+
+    printf("\n");
+
+    // Pattern 3: Square
+    printf("Pattern 3: Square\n");
+    for (int row = 1; row <= size; row++) {
+        for (int col = 1; col <= size; col++) {
+            printf("* ");
+        }
+        printf("\n");
+    }
+
+    printf("\n");
+
+    // Pattern 4: Hollow Square
+    printf("Pattern 4: Hollow Square\n");
+    for (int row = 1; row <= size; row++) {
+        for (int col = 1; col <= size; col++) {
+            // Print star if on border, space otherwise
+            if (row == 1 || row == size || col == 1 || col == size) {
+                printf("* ");
+            } else {
+                printf("  ");
+            }
+        }
+        printf("\n");
+    }
+
+    printf("\n");
+
+    // Pattern 5: Number Triangle
+    printf("Pattern 5: Number Triangle\n");
+    for (int row = 1; row <= size; row++) {
+        for (int col = 1; col <= row; col++) {
+            printf("%d ", col);
+        }
+        printf("\n");
+    }
+
+    return 0;
+}
+</textarea>
+                </div>
+                <div class="playground-output">
+                    <div class="output-label">Output</div>
+                    <div class="output-text output-placeholder">Click "Run Code" to compile and execute...</div>
+                </div>
+            </div>
+
+            <h4>How It Works</h4>
+            <ol>
+                <li><strong>Outer loop:</strong> Controls rows (vertical position)</li>
+                <li><strong>Inner loop:</strong> Controls columns (horizontal position)</li>
+                <li><strong>Pattern logic:</strong> Inner loop limit depends on outer loop variable</li>
+                <li><strong>Hollow square:</strong> Use conditional to print star only on borders</li>
+                <li><strong>Number pattern:</strong> Print loop variable instead of asterisk</li>
+            </ol>
+
+            <div class="callout-success">
+                <strong>Challenge:</strong> Create a centered triangle (pyramid) pattern. You'll need spaces before the stars!
+            </div>
+
+            <!-- Example 7 -->
+            <div class="example-header">
+                <h3>Example 7: Input Validation Loop</h3>
+                <p class="example-objectives"><strong>Concepts:</strong> do...while, input validation, logical operators</p>
+                <p class="example-objectives"><strong>Purpose:</strong> Demonstrate robust input handling with validation</p>
+            </div>
+
+            <h4>The Problem</h4>
+            <p>Create a function to get a valid integer within a specified range. Keep prompting until the user enters valid input. This is a crucial skill for writing reliable programs.</p>
+
+            <h4>The Solution</h4>
+
+            <div class="code-playground" id="playground7">
+                <div class="playground-header">
+                    <div class="playground-title">Validated Input System</div>
+                    <div class="playground-actions">
+                        <span class="loading-indicator" id="loading7">Compiling...</span>
+                        <button class="run-btn" onclick="runCode('playground7')">Run Code</button>
+                        <button class="reset-btn" onclick="resetCode('playground7')">Reset</button>
+                    </div>
+                </div>
+                <div class="playground-editor">
+                    <textarea id="editor7">
+#include <stdio.h>
+
+int main() {
+    printf("=== Student Information System ===\n");
+    printf("Testing input validation with different scenarios\n\n");
+
+    // Test Case 1: Valid input (eligible)
+    printf("--- Test Case 1: Valid Input ---\n");
+    int age = 20;
+    int score = 75;
+    printf("Age entered: %d\n", age);
+    if (age >= 16 && age <= 25) {
+        printf("✓ Age is valid!\n");
+    } else {
+        printf("❌ Invalid age!\n");
+    }
+    printf("Score entered: %d\n", score);
+    if (score >= 0 && score <= 100) {
+        printf("✓ Score is valid!\n");
+    } else {
+        printf("❌ Invalid score!\n");
+    }
+
+    if (age >= 18 && score >= 60) {
+        printf("Result: ELIGIBLE for scholarship\n\n");
+    } else {
+        printf("Result: NOT ELIGIBLE\n\n");
+    }
+
+    // Test Case 2: Too young
+    printf("--- Test Case 2: Too Young ---\n");
+    age = 17;
+    score = 85;
+    printf("Age: %d, Score: %d\n", age, score);
+    if (age >= 18 && score >= 60) {
+        printf("Result: ELIGIBLE\n\n");
+    } else if (score >= 60) {
+        printf("Result: Score is good, but too young (need age >= 18)\n\n");
+    } else {
+        printf("Result: NOT ELIGIBLE\n\n");
+    }
+
+    // Test Case 3: Score too low
+    printf("--- Test Case 3: Score Too Low ---\n");
+    age = 21;
+    score = 55;
+    printf("Age: %d, Score: %d\n", age, score);
+    if (age >= 18 && score >= 60) {
+        printf("Result: ELIGIBLE\n\n");
+    } else if (age >= 18) {
+        printf("Result: Age OK, but score too low (need >= 60)\n\n");
+    } else {
+        printf("Result: NOT ELIGIBLE\n\n");
+    }
+
+    // Test Case 4: Invalid inputs
+    printf("--- Test Case 4: Invalid Inputs ---\n");
+    age = 15;  // Too young for system
+    score = 105;  // Score > 100
+    printf("Age: %d ", age);
+    if (age < 16 || age > 25) {
+        printf("❌ INVALID (must be 16-25)\n");
+    }
+    printf("Score: %d ", score);
+    if (score < 0 || score > 100) {
+        printf("❌ INVALID (must be 0-100)\n");
+    }
+
+    printf("\nNote: In a real program, you'd use:\n");
+    printf("- do...while loops for validation\n");
+    printf("- scanf() to get user input\n");
+    printf("- Loop until valid input is received\n");
+
+    return 0;
+}
+</textarea>
+                </div>
+                <div class="playground-output">
+                    <div class="output-label">Output</div>
+                    <div class="output-text output-placeholder">Click "Run Code" to compile and execute...</div>
+                </div>
+            </div>
+
+            <h4>How It Works</h4>
+            <ol>
+                <li><strong>Test scenarios:</strong> Shows validation logic with different test cases</li>
+                <li><strong>Range checking:</strong> Validates age (16-25) and score (0-100)</li>
+                <li><strong>Clear feedback:</strong> Displays whether input is valid or invalid</li>
+                <li><strong>Complex logic:</strong> Uses AND/OR operators for eligibility</li>
+                <li><strong>Comprehensive testing:</strong> Covers valid, boundary, and invalid cases</li>
+            </ol>
+
+            <div class="tip-box">
+                <p><strong>Real-world tip:</strong> Always validate user input! In a real program, you'd use do...while loops with scanf() to keep prompting until valid input is received. This demo shows the validation logic with test cases.</p>
+            </div>
+
+            <!-- Summary -->
+            <h2>Summary: Putting It All Together</h2>
+
+            <p>You've now seen seven complete programs demonstrating every control structure:</p>
+
+            <ul>
+                <li><strong>Example 1 (Grade Classifier):</strong> Nested if...else for complex decisions with validation</li>
+                <li><strong>Example 2 (Calculator Demo):</strong> Multiple operations showing switch logic and error handling</li>
+                <li><strong>Example 3 (Factorial):</strong> for loop for counter-controlled repetition with visualization</li>
+                <li><strong>Example 4 (Class Average):</strong> Array processing demonstrating statistics tracking</li>
+                <li><strong>Example 5 (Guessing Game):</strong> Nested structures and while loop for interactive game</li>
+                <li><strong>Example 6 (Patterns):</strong> Nested for loops for multiple pattern types</li>
+                <li><strong>Example 7 (Validation Demo):</strong> Test cases showing input validation logic</li>
+            </ul>
+
+            <div class="success-box">
+                <h3>Key Takeaways</h3>
+                <ul>
+                    <li>✓ Real programs combine multiple control structures</li>
+                    <li>✓ Always validate input before processing</li>
+                    <li>✓ Give users clear, helpful feedback</li>
+                    <li>✓ Handle edge cases (like division by zero)</li>
+                    <li>✓ Use the right loop for the job (for vs while vs do...while)</li>
+                    <li>✓ switch is cleaner than many if...else statements</li>
+                    <li>✓ Nested structures solve complex problems</li>
+                </ul>
+            </div>
+
+            <h3>Next Steps</h3>
+
+            <p>Now that you've seen complete examples:</p>
+            <ol>
+                <li><strong>Practice:</strong> Head to the practice section and write your own programs</li>
+                <li><strong>Modify:</strong> Take these examples and add features</li>
+                <li><strong>Combine:</strong> Mix concepts from different examples</li>
+                <li><strong>Quiz:</strong> Test your understanding with the quiz</li>
+            </ol>
+
+            <p>Remember: the best way to learn programming is by doing. Run these examples, break them, fix them, and make them your own!</p>
+
+        </div>
+    </div>
+
+    <script>
+        // Store all editors and original code
+        const editors = {};
+        const originalCode = {};
+
+        // Initialize a CodeMirror editor
+        function initEditor(playgroundId, editorId) {
+            const textarea = document.getElementById(editorId);
+            const editor = CodeMirror.fromTextArea(textarea, {
+                mode: 'text/x-csrc',
+                theme: 'material-ocean',
+                lineNumbers: true,
+                indentUnit: 4,
+                tabSize: 4,
+                indentWithTabs: false,
+                lineWrapping: true,
+                matchBrackets: true,
+                autoCloseBrackets: true
+            });
+
+            editors[playgroundId] = editor;
+            originalCode[playgroundId] = editor.getValue();
+        }
+
+        // Initialize all editors on page load
+        window.addEventListener('DOMContentLoaded', function() {
+            initEditor('playground1', 'editor1');
+            initEditor('playground2', 'editor2');
+            initEditor('playground3', 'editor3');
+            initEditor('playground4', 'editor4');
+            initEditor('playground5', 'editor5');
+            initEditor('playground6', 'editor6');
+            initEditor('playground7', 'editor7');
+        });
+
+        // Run code via Piston API
+        async function runCode(playgroundId) {
+            const editor = editors[playgroundId];
+            const code = editor.getValue();
+            const outputDiv = document.querySelector(`#${playgroundId} .output-text`);
+            const runBtn = document.querySelector(`#${playgroundId} .run-btn`);
+            const loadingIndicator = document.getElementById(playgroundId.replace('playground', 'loading'));
+
+            // Show loading state
+            runBtn.disabled = true;
+            loadingIndicator.classList.add('active');
+            outputDiv.className = 'output-text output-info';
+            outputDiv.textContent = 'Compiling and executing your code...';
+
+            try {
+                // Call Piston API
+                const response = await fetch('https://emkc.org/api/v2/piston/execute', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        language: 'c',
+                        version: '10.2.0',
+                        files: [{
+                            name: 'main.c',
+                            content: code
+                        }],
+                        stdin: '',
+                        args: [],
+                        compile_timeout: 10000,
+                        run_timeout: 3000,
+                        compile_memory_limit: -1,
+                        run_memory_limit: -1
+                    })
+                });
+
+                const result = await response.json();
+
+                // Display results
+                if (result.compile && result.compile.code !== 0) {
+                    // Compilation error
+                    outputDiv.className = 'output-text output-error';
+                    outputDiv.innerHTML = `<div class="output-info">❌ Compilation Error:</div>${escapeHtml(result.compile.stderr || result.compile.output)}`;
+                } else if (result.run) {
+                    // Execution output
+                    if (result.run.code === 0) {
+                        // Success
+                        outputDiv.className = 'output-text output-success';
+                        const output = result.run.stdout || result.run.output || '(no output)';
+                        outputDiv.innerHTML = `<div class="output-info">✅ Executed successfully:</div>${escapeHtml(output)}`;
+                    } else {
+                        // Runtime error
+                        outputDiv.className = 'output-text output-error';
+                        const error = result.run.stderr || result.run.output || 'Runtime error';
+                        outputDiv.innerHTML = `<div class="output-info">❌ Runtime Error (exit code ${result.run.code}):</div>${escapeHtml(error)}`;
+                    }
+                } else {
+                    // Unknown error
+                    outputDiv.className = 'output-text output-error';
+                    outputDiv.textContent = 'Error: Unable to execute code. Please try again.';
+                }
+
+            } catch (error) {
+                // Network or API error
+                outputDiv.className = 'output-text output-error';
+                outputDiv.innerHTML = `<div class="output-info">❌ Error:</div>Failed to connect to compilation service. Please check your internet connection and try again.`;
+                console.error('Piston API error:', error);
+            } finally {
+                // Hide loading state
+                runBtn.disabled = false;
+                loadingIndicator.classList.remove('active');
+            }
+        }
+
+        // Reset code to original
+        function resetCode(playgroundId) {
+            const editor = editors[playgroundId];
+            const outputDiv = document.querySelector(`#${playgroundId} .output-text`);
+
+            editor.setValue(originalCode[playgroundId]);
+            outputDiv.className = 'output-text output-placeholder';
+            outputDiv.textContent = 'Click "Run Code" to compile and execute...';
+        }
+
+        // Escape HTML for safe display
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+    </script>
+
+    <!-- Prism.js for syntax highlighting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-c.min.js"></script>
+
+</body>
+</html>

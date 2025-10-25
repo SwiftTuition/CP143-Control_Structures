@@ -1,0 +1,1537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control Structures - Selection & Repetition | Swift Tuition CP143</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Cascadia+Code:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <!-- CodeMirror for interactive playground -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/theme/material-ocean.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/clike/clike.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #e2e8f0;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 2px solid #0ea5e9;
+        }
+
+        .nav-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #0ea5e9;
+        }
+
+        .nav-brand img {
+            height: 40px;
+            width: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #0ea5e9;
+            box-shadow: 0 2px 8px rgba(14, 165, 233, 0.3);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #cbd5e1;
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: #0ea5e9;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .content-card {
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(14, 165, 233, 0.2);
+        }
+
+        h1 {
+            color: #0ea5e9;
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        h2 {
+            color: #38bdf8;
+            font-size: 2rem;
+            margin: 2rem 0 1rem 0;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid rgba(14, 165, 233, 0.3);
+        }
+
+        h3 {
+            color: #7dd3fc;
+            font-size: 1.5rem;
+            margin: 1.5rem 0 1rem 0;
+        }
+
+        h4 {
+            color: #bae6fd;
+            font-size: 1.2rem;
+            margin: 1rem 0 0.5rem 0;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            color: #cbd5e1;
+        }
+
+        .info-box {
+            background: rgba(14, 165, 233, 0.1);
+            border-left: 4px solid #0ea5e9;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .info-box p {
+            margin-bottom: 0.5rem;
+        }
+
+        .warning-box {
+            background: rgba(239, 68, 68, 0.1);
+            border-left: 4px solid #ef4444;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .success-box {
+            background: rgba(16, 185, 129, 0.1);
+            border-left: 4px solid #10b981;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .tip-box {
+            background: rgba(168, 85, 247, 0.1);
+            border-left: 4px solid #a855f7;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        /* CODE PLAYGROUND COMPONENT */
+        .code-playground {
+            background: #1e293b;
+            border-radius: 12px;
+            overflow: hidden;
+            margin: 2rem 0;
+            border: 1px solid #334155;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .playground-header {
+            background: #0f172a;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #334155;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .playground-title {
+            color: #0ea5e9;
+            font-weight: 600;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .playground-title::before {
+            content: "⚡";
+            font-size: 1.2rem;
+        }
+
+        .playground-actions {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .run-btn {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            border: none;
+            padding: 0.6rem 1.5rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .run-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+        }
+
+        .run-btn:disabled {
+            background: #64748b;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .run-btn::before {
+            content: "▶";
+            font-size: 1rem;
+        }
+
+        .reset-btn {
+            background: #64748b;
+            color: white;
+            border: none;
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .reset-btn:hover {
+            background: #475569;
+            transform: translateY(-2px);
+        }
+
+        .loading-indicator {
+            display: none;
+            color: #eab308;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .loading-indicator.active {
+            display: block;
+        }
+
+        .playground-editor {
+            background: #0c1222;
+            height: 350px;
+        }
+
+        .CodeMirror {
+            height: 350px;
+            font-family: 'Cascadia Code', 'Courier New', monospace;
+            font-size: 14px;
+        }
+
+        .playground-output {
+            background: #0f172a;
+            padding: 1.5rem;
+            border-top: 1px solid #334155;
+            min-height: 120px;
+        }
+
+        .output-label {
+            color: #64748b;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.75rem;
+        }
+
+        .output-text {
+            font-family: 'Cascadia Code', 'Courier New', monospace;
+            font-size: 0.9rem;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            padding: 1rem;
+            border-radius: 6px;
+            border: 1px solid #334155;
+        }
+
+        .output-placeholder {
+            background: #1e293b;
+            color: #64748b;
+        }
+
+        .output-success {
+            background: #142d1f;
+            color: #10b981;
+            border-color: #10b981;
+        }
+
+        .output-error {
+            background: #2d1414;
+            color: #ef4444;
+            border-color: #ef4444;
+        }
+
+        .output-info {
+            color: #cbd5e1;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .callout-success {
+            background: #142d1f;
+            border-left: 5px solid #10b981;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 6px;
+        }
+
+        .callout-success strong {
+            color: #10b981;
+        }
+
+        .code-block {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+
+        pre {
+            margin: 0;
+        }
+
+        code {
+            font-family: 'Cascadia Code', 'Courier New', Courier, monospace;
+            font-size: 0.95rem;
+        }
+
+        ul, ol {
+            margin: 1rem 0 1rem 2rem;
+            color: #cbd5e1;
+        }
+
+        li {
+            margin: 0.5rem 0;
+        }
+
+        .exploration-prompt {
+            background: rgba(168, 85, 247, 0.1);
+            border: 2px dashed #a855f7;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+            font-style: italic;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: rgba(30, 41, 59, 0.5);
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border: 1px solid #334155;
+        }
+
+        th {
+            background: rgba(14, 165, 233, 0.2);
+            color: #38bdf8;
+            font-weight: 600;
+        }
+
+        tr:hover {
+            background: rgba(14, 165, 233, 0.1);
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .comparison-card {
+            background: rgba(30, 41, 59, 0.7);
+            border: 1px solid #334155;
+            border-radius: 8px;
+            padding: 1.5rem;
+        }
+
+        .comparison-card h4 {
+            color: #ef4444;
+            margin-bottom: 1rem;
+        }
+
+        .comparison-card.good h4 {
+            color: #10b981;
+        }
+
+        @media (max-width: 768px) {
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                gap: 0.5rem;
+                text-align: center;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .container {
+                padding: 0 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-content">
+            <div class="nav-brand">
+                <img src="swift_tuition_logo.png" alt="Swift Tuition Logo">
+                <span>CP143: Control Structures</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="theory.html">Theory</a></li>
+                <li><a href="examples.html">Examples</a></li>
+                <li><a href="practice.html">Practice</a></li>
+                <li><a href="quiz.html">Quiz</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="content-card">
+            <h1>Control Structures: Selection & Repetition</h1>
+
+            <div class="info-box">
+                <p><strong>Covers:</strong> Lectures 3-8, Chapters 3-4</p>
+                <p><strong>Textbook:</strong> Chapter 2 (section 2.6), Chapter 3 (sections 3.1-3.12), Chapter 4 (sections 4.1-4.11), Chapter 9 (formatted I/O)</p>
+                <p><strong>Learning Outcomes:</strong> LO5 (Master the seven control structures), LO2 (Design algorithms using pseudocode and flowcharts)</p>
+                <p><strong>Prerequisites:</strong> Introduction to C Programming (variables, data types, basic input/output)</p>
+                <p><strong>Estimated Time:</strong> 8-10 hours</p>
+            </div>
+
+            <p>Good day, good people.</p>
+
+            <p>Now that you understand the basics of C programming, it's time to learn how to make decisions and repeat actions. Think about everyday tasks: you check if it's raining before deciding whether to take an umbrella. You brush each tooth in your mouth, repeating the action until you're done. Programs need this same ability to make choices and repeat operations.</p>
+
+            <p>This module covers the seven control structures that form the foundation of all C programs. By the end, you'll be able to write programs that make intelligent decisions, repeat tasks efficiently, and solve complex problems through structured logic.</p>
+
+            <!-- Section 1: Overview -->
+            <h2>1. Why Control Structures Matter</h2>
+
+            <p>Imagine trying to write a program that checks 100 student grades. Without control structures, you'd need to write the same code 100 times. Or consider a program that needs to behave differently depending on user input - without decision-making ability, your program would be stuck doing the same thing every time.</p>
+
+            <p>Control structures give your programs three essential abilities:</p>
+
+            <ul>
+                <li><strong>Sequence:</strong> Execute statements in order (the default behavior)</li>
+                <li><strong>Selection:</strong> Choose between different paths based on conditions</li>
+                <li><strong>Repetition:</strong> Repeat actions while conditions are true</li>
+            </ul>
+
+            <div class="info-box">
+                <p><strong>The Seven Control Structures in C:</strong></p>
+                <ol>
+                    <li><code>if</code> - Execute code if a condition is true</li>
+                    <li><code>if...else</code> - Choose between two alternatives</li>
+                    <li><code>while</code> - Repeat while a condition is true (test first)</li>
+                    <li><code>for</code> - Repeat a specific number of times</li>
+                    <li><code>do...while</code> - Repeat while a condition is true (test last)</li>
+                    <li><code>switch</code> - Select from multiple alternatives</li>
+                    <li><strong>Nested structures</strong> - Combine structures inside one another</li>
+                </ol>
+            </div>
+
+            <p>All programs can be built using just these seven structures. This is the foundation of <strong>structured programming</strong>, a methodology that produces clear, maintainable, and reliable code.</p>
+
+            <!-- Section 2: Algorithms and Pseudocode -->
+            <h2>2. Algorithms and Pseudocode</h2>
+
+            <h3>What is an Algorithm?</h3>
+
+            <p>Before you write any code, you need a plan. An <strong>algorithm</strong> is a step-by-step procedure for solving a problem. It specifies:</p>
+            <ul>
+                <li>The <strong>actions</strong> to execute</li>
+                <li>The <strong>order</strong> in which to execute them</li>
+            </ul>
+
+            <p>The order matters. Consider this "rise-and-shine" algorithm for getting ready for class:</p>
+
+            <div class="success-box">
+                <p><strong>Correct order:</strong></p>
+                <ol>
+                    <li>Get out of bed</li>
+                    <li>Take off pajamas</li>
+                    <li>Take a shower</li>
+                    <li>Get dressed</li>
+                    <li>Eat breakfast</li>
+                    <li>Leave for class</li>
+                </ol>
+            </div>
+
+            <p>What happens if you get dressed before showering? You arrive at class soaking wet! Order matters in algorithms just as it matters in life.</p>
+
+            <h3>Writing Pseudocode</h3>
+
+            <p><strong>Pseudocode</strong> is an informal language that helps you design algorithms without worrying about C syntax. It uses plain English mixed with programming-like structures.</p>
+
+            <div class="info-box">
+                <p><strong>Example: Calculate average of test scores</strong></p>
+                <p style="font-family: 'Cascadia Code', monospace; white-space: pre;">
+Set total to zero
+Set counter to one
+
+While counter is less than or equal to 10
+    Input the next test score
+    Add the score to total
+    Add one to counter
+
+Set average to total divided by 10
+Print the average</p>
+            </div>
+
+            <p>Notice how pseudocode:</p>
+            <ul>
+                <li>Uses indentation to show which statements belong together</li>
+                <li>Describes actions in plain English</li>
+                <li>Focuses on logic, not syntax details</li>
+                <li>Can be easily translated to C code</li>
+            </ul>
+
+            <!-- Section 3: The if Statement -->
+            <h2>3. The if Statement: Making Decisions</h2>
+
+            <p>The <code>if</code> statement is the simplest form of selection. It executes code only if a condition is true.</p>
+
+            <h3>Basic Syntax</h3>
+
+            <div class="code-block">
+<pre><code class="language-c">if (condition) {
+    // Code to execute if condition is true
+}</code></pre>
+            </div>
+
+            <div class="code-playground" id="playground1">
+                <div class="playground-header">
+                    <div class="playground-title">Interactive C Playground: if Statement</div>
+                    <div class="playground-actions">
+                        <span class="loading-indicator" id="loading1">Compiling...</span>
+                        <button class="run-btn" onclick="runCode('playground1')">Run Code</button>
+                        <button class="reset-btn" onclick="resetCode('playground1')">Reset</button>
+                    </div>
+                </div>
+                <div class="playground-editor">
+                    <textarea id="editor1">
+#include <stdio.h>
+
+int main() {
+    int grade = 75;
+
+    if (grade >= 50) {
+        printf("Passed\n");
+    }
+
+    printf("Grade: %d\n", grade);
+    return 0;
+}
+</textarea>
+                </div>
+                <div class="playground-output">
+                    <div class="output-label">Output</div>
+                    <div class="output-text output-placeholder">Click "Run Code" to compile and execute...</div>
+                </div>
+            </div>
+
+            <div class="callout-success">
+                <strong>Try it yourself:</strong> Change the grade to 45 and run again. What happens? The "Passed" message doesn't print because the condition is false!
+            </div>
+
+            <h3>Relational and Equality Operators</h3>
+
+            <p>Conditions are built using comparison operators:</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Operator</th>
+                        <th>Meaning</th>
+                        <th>Example</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>==</code></td>
+                        <td>Equal to</td>
+                        <td><code>x == 5</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>!=</code></td>
+                        <td>Not equal to</td>
+                        <td><code>x != 0</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>&gt;</code></td>
+                        <td>Greater than</td>
+                        <td><code>x &gt; 10</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>&lt;</code></td>
+                        <td>Less than</td>
+                        <td><code>x &lt; 100</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>&gt;=</code></td>
+                        <td>Greater than or equal to</td>
+                        <td><code>x &gt;= 50</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>&lt;=</code></td>
+                        <td>Less than or equal to</td>
+                        <td><code>x &lt;= 100</code></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="warning-box">
+                <p><strong>Common Error: = vs ==</strong></p>
+                <p>The single equals sign <code>=</code> is for <strong>assignment</strong>, while double equals <code>==</code> is for <strong>comparison</strong>.</p>
+                <p><code>if (x = 5)</code> ❌ This assigns 5 to x (always true!)</p>
+                <p><code>if (x == 5)</code> ✓ This checks if x equals 5</p>
+            </div>
+
+            <!-- Section 4: The if...else Statement -->
+            <h2>4. The if...else Statement: Two Paths</h2>
+
+            <p>Often you need to do one thing if a condition is true, and something different if it's false. That's where <code>if...else</code> comes in.</p>
+
+            <div class="code-playground" id="playground2">
+                <div class="playground-header">
+                    <div class="playground-title">Interactive C Playground: if...else Statement</div>
+                    <div class="playground-actions">
+                        <span class="loading-indicator" id="loading2">Compiling...</span>
+                        <button class="run-btn" onclick="runCode('playground2')">Run Code</button>
+                        <button class="reset-btn" onclick="resetCode('playground2')">Reset</button>
+                    </div>
+                </div>
+                <div class="playground-editor">
+                    <textarea id="editor2">
+#include <stdio.h>
+
+int main() {
+    int grade = 45;
+
+    if (grade >= 50) {
+        printf("Passed\n");
+    } else {
+        printf("Failed\n");
+    }
+
+    printf("Grade: %d\n", grade);
+    return 0;
+}
+</textarea>
+                </div>
+                <div class="playground-output">
+                    <div class="output-label">Output</div>
+                    <div class="output-text output-placeholder">Click "Run Code" to compile and execute...</div>
+                </div>
+            </div>
+
+            <div class="callout-success">
+                <strong>Experiment:</strong> Try changing the grade to different values. Notice how one of the two paths always executes!
+            </div>
+
+            <h3>Nested if...else: Multiple Conditions</h3>
+
+            <div class="code-playground" id="playground3">
+                <div class="playground-header">
+                    <div class="playground-title">Interactive C Playground: Nested if...else (Grade System)</div>
+                    <div class="playground-actions">
+                        <span class="loading-indicator" id="loading3">Compiling...</span>
+                        <button class="run-btn" onclick="runCode('playground3')">Run Code</button>
+                        <button class="reset-btn" onclick="resetCode('playground3')">Reset</button>
+                    </div>
+                </div>
+                <div class="playground-editor">
+                    <textarea id="editor3">
+#include <stdio.h>
+
+int main() {
+    int grade = 82;
+
+    if (grade >= 80) {
+        printf("A\n");
+    } else if (grade >= 70) {
+        printf("B\n");
+    } else if (grade >= 60) {
+        printf("C\n");
+    } else if (grade >= 50) {
+        printf("D\n");
+    } else {
+        printf("F\n");
+    }
+
+    printf("Grade: %d\n", grade);
+    return 0;
+}
+</textarea>
+                </div>
+                <div class="playground-output">
+                    <div class="output-label">Output</div>
+                    <div class="output-text output-placeholder">Click "Run Code" to compile and execute...</div>
+                </div>
+            </div>
+
+            <div class="callout-success">
+                <strong>Challenge:</strong> Try different grade values (25, 55, 65, 75, 85) and see which letter grade prints each time!
+            </div>
+
+            <!-- Section 5: The while Loop -->
+            <h2>5. The while Loop: Repeat While True</h2>
+
+            <p>Loops let you repeat actions without writing the same code multiple times. The <code>while</code> loop is the most basic repetition structure.</p>
+
+            <div class="code-playground" id="playground4">
+                <div class="playground-header">
+                    <div class="playground-title">Interactive C Playground: while Loop (Counter)</div>
+                    <div class="playground-actions">
+                        <span class="loading-indicator" id="loading4">Compiling...</span>
+                        <button class="run-btn" onclick="runCode('playground4')">Run Code</button>
+                        <button class="reset-btn" onclick="resetCode('playground4')">Reset</button>
+                    </div>
+                </div>
+                <div class="playground-editor">
+                    <textarea id="editor4">
+#include <stdio.h>
+
+int main() {
+    int counter = 1;
+
+    while (counter <= 5) {
+        printf("%d ", counter);
+        counter++;
+    }
+    printf("\n");
+
+    printf("Final counter value: %d\n", counter);
+    return 0;
+}
+</textarea>
+                </div>
+                <div class="playground-output">
+                    <div class="output-label">Output</div>
+                    <div class="output-text output-placeholder">Click "Run Code" to compile and execute...</div>
+                </div>
+            </div>
+
+            <div class="callout-success">
+                <strong>Experiment:</strong> Change the condition to <code>counter <= 10</code>. How many times does the loop run now?
+            </div>
+
+            <div class="warning-box">
+                <p><strong>Warning: Infinite Loops</strong></p>
+                <p>If the loop condition never becomes false, your loop runs forever. This is called an <strong>infinite loop</strong>.</p>
+                <p>Always ensure your loop makes progress toward the exit condition!</p>
+            </div>
+
+            <!-- Section 6: The for Loop -->
+            <h2>6. The for Loop: Compact Counter Control</h2>
+
+            <p>The <code>for</code> loop packages all parts of counter-controlled repetition into one compact line. It's the preferred choice when you know how many iterations you need.</p>
+
+            <div class="code-playground" id="playground5">
+                <div class="playground-header">
+                    <div class="playground-title">Interactive C Playground: for Loop</div>
+                    <div class="playground-actions">
+                        <span class="loading-indicator" id="loading5">Compiling...</span>
+                        <button class="run-btn" onclick="runCode('playground5')">Run Code</button>
+                        <button class="reset-btn" onclick="resetCode('playground5')">Reset</button>
+                    </div>
+                </div>
+                <div class="playground-editor">
+                    <textarea id="editor5">
+#include <stdio.h>
+
+int main() {
+    // Count from 1 to 5
+    for (int counter = 1; counter <= 5; counter++) {
+        printf("%d ", counter);
+    }
+    printf("\n");
+
+    // Count backwards from 10 to 1
+    for (int i = 10; i >= 1; i--) {
+        printf("%d ", i);
+    }
+    printf("\n");
+
+    return 0;
+}
+</textarea>
+                </div>
+                <div class="playground-output">
+                    <div class="output-label">Output</div>
+                    <div class="output-text output-placeholder">Click "Run Code" to compile and execute...</div>
+                </div>
+            </div>
+
+            <div class="callout-success">
+                <strong>Try it:</strong> Add another for loop that counts by 2s: 2, 4, 6, 8, 10. Hint: Use <code>i += 2</code> for the increment!
+            </div>
+
+            <h3>Example: Sum of Numbers</h3>
+
+            <div class="code-playground" id="playground6">
+                <div class="playground-header">
+                    <div class="playground-title">Interactive C Playground: Summing Numbers</div>
+                    <div class="playground-actions">
+                        <span class="loading-indicator" id="loading6">Compiling...</span>
+                        <button class="run-btn" onclick="runCode('playground6')">Run Code</button>
+                        <button class="reset-btn" onclick="resetCode('playground6')">Reset</button>
+                    </div>
+                </div>
+                <div class="playground-editor">
+                    <textarea id="editor6">
+#include <stdio.h>
+
+int main() {
+    int sum = 0;
+
+    // Sum all numbers from 1 to 10
+    for (int number = 1; number <= 10; number++) {
+        sum += number;
+        printf("After adding %d: sum = %d\n", number, sum);
+    }
+
+    printf("\nFinal sum: %d\n", sum);
+    return 0;
+}
+</textarea>
+                </div>
+                <div class="playground-output">
+                    <div class="output-label">Output</div>
+                    <div class="output-text output-placeholder">Click "Run Code" to compile and execute...</div>
+                </div>
+            </div>
+
+            <!-- Section 7: The do...while Loop -->
+            <h2>7. The do...while Loop: Execute First, Test Later</h2>
+
+            <p>Unlike <code>while</code> and <code>for</code>, the <code>do...while</code> loop tests its condition <strong>after</strong> executing the body. This guarantees the body executes <strong>at least once</strong>.</p>
+
+            <div class="code-playground" id="playground7">
+                <div class="playground-header">
+                    <div class="playground-title">Interactive C Playground: do...while Loop</div>
+                    <div class="playground-actions">
+                        <span class="loading-indicator" id="loading7">Compiling...</span>
+                        <button class="run-btn" onclick="runCode('playground7')">Run Code</button>
+                        <button class="reset-btn" onclick="resetCode('playground7')">Reset</button>
+                    </div>
+                </div>
+                <div class="playground-editor">
+                    <textarea id="editor7">
+#include <stdio.h>
+
+int main() {
+    int counter = 1;
+
+    do {
+        printf("%d ", counter);
+        counter++;
+    } while (counter <= 5);
+
+    printf("\n");
+
+    // This executes once even though condition is false
+    int x = 10;
+    do {
+        printf("Executed once: x = %d\n", x);
+        x++;
+    } while (x < 5);
+
+    return 0;
+}
+</textarea>
+                </div>
+                <div class="playground-output">
+                    <div class="output-label">Output</div>
+                    <div class="output-text output-placeholder">Click "Run Code" to compile and execute...</div>
+                </div>
+            </div>
+
+            <div class="callout-success">
+                <strong>Notice:</strong> The second do...while loop prints once even though x (10) is not less than 5. The body executes before the condition is checked!
+            </div>
+
+            <!-- Section 8: The switch Statement -->
+            <h2>8. The switch Statement: Multiple Choice Selection</h2>
+
+            <p>When you need to check a variable against many possible values, the <code>switch</code> statement is clearer than a long chain of <code>if...else if</code> statements.</p>
+
+            <div class="code-playground" id="playground8">
+                <div class="playground-header">
+                    <div class="playground-title">Interactive C Playground: switch Statement</div>
+                    <div class="playground-actions">
+                        <span class="loading-indicator" id="loading8">Compiling...</span>
+                        <button class="run-btn" onclick="runCode('playground8')">Run Code</button>
+                        <button class="reset-btn" onclick="resetCode('playground8')">Reset</button>
+                    </div>
+                </div>
+                <div class="playground-editor">
+                    <textarea id="editor8">
+#include <stdio.h>
+
+int main() {
+    int day = 3;
+
+    switch (day) {
+        case 1:
+            printf("Monday\n");
+            break;
+        case 2:
+            printf("Tuesday\n");
+            break;
+        case 3:
+            printf("Wednesday\n");
+            break;
+        case 4:
+            printf("Thursday\n");
+            break;
+        case 5:
+            printf("Friday\n");
+            break;
+        case 6:
+            printf("Saturday\n");
+            break;
+        case 7:
+            printf("Sunday\n");
+            break;
+        default:
+            printf("Invalid day\n");
+            break;
+    }
+
+    return 0;
+}
+</textarea>
+                </div>
+                <div class="playground-output">
+                    <div class="output-label">Output</div>
+                    <div class="output-text output-placeholder">Click "Run Code" to compile and execute...</div>
+                </div>
+            </div>
+
+            <div class="callout-success">
+                <strong>Experiment:</strong> Try changing day to different values (1-7, or 0, or 10). See how the switch handles each case!
+            </div>
+
+            <div class="warning-box">
+                <p><strong>Don't Forget break!</strong></p>
+                <p>Without <code>break</code>, execution "falls through" to the next case. This is usually a bug!</p>
+            </div>
+
+            <!-- Section 9: Logical Operators -->
+            <h2>9. Logical Operators: Complex Conditions</h2>
+
+            <p>Often you need to combine multiple conditions. Logical operators let you build complex boolean expressions.</p>
+
+            <div class="code-playground" id="playground9">
+                <div class="playground-header">
+                    <div class="playground-title">Interactive C Playground: Logical Operators</div>
+                    <div class="playground-actions">
+                        <span class="loading-indicator" id="loading9">Compiling...</span>
+                        <button class="run-btn" onclick="runCode('playground9')">Run Code</button>
+                        <button class="reset-btn" onclick="resetCode('playground9')">Reset</button>
+                    </div>
+                </div>
+                <div class="playground-editor">
+                    <textarea id="editor9">
+#include <stdio.h>
+
+int main() {
+    int age = 20;
+    int isCitizen = 1;  // 1 = true, 0 = false
+
+    // AND operator
+    if (age >= 18 && isCitizen) {
+        printf("You can vote!\n");
+    }
+
+    // OR operator
+    int day = 7;
+    if (day == 6 || day == 7) {
+        printf("It's the weekend!\n");
+    }
+
+    // NOT operator
+    int x = 5;
+    if (!(x == 0)) {
+        printf("x is not zero\n");
+    }
+
+    return 0;
+}
+</textarea>
+                </div>
+                <div class="playground-output">
+                    <div class="output-label">Output</div>
+                    <div class="output-text output-placeholder">Click "Run Code" to compile and execute...</div>
+                </div>
+            </div>
+
+            <h3>Truth Tables</h3>
+
+            <h4>AND (&&) - Both must be true</h4>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Condition 1</th>
+                        <th>Condition 2</th>
+                        <th>Result</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>false</td>
+                        <td>false</td>
+                        <td>false</td>
+                    </tr>
+                    <tr>
+                        <td>false</td>
+                        <td>true</td>
+                        <td>false</td>
+                    </tr>
+                    <tr>
+                        <td>true</td>
+                        <td>false</td>
+                        <td>false</td>
+                    </tr>
+                    <tr>
+                        <td>true</td>
+                        <td>true</td>
+                        <td>true</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h4>OR (||) - Either can be true</h4>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Condition 1</th>
+                        <th>Condition 2</th>
+                        <th>Result</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>false</td>
+                        <td>false</td>
+                        <td>false</td>
+                    </tr>
+                    <tr>
+                        <td>false</td>
+                        <td>true</td>
+                        <td>true</td>
+                    </tr>
+                    <tr>
+                        <td>true</td>
+                        <td>false</td>
+                        <td>true</td>
+                    </tr>
+                    <tr>
+                        <td>true</td>
+                        <td>true</td>
+                        <td>true</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Section 10: Nested Control Structures -->
+            <h2>10. Nested Control Structures: Combining Power</h2>
+
+            <p>You can place control structures inside other control structures. This is called <strong>nesting</strong>, and it's essential for solving complex problems.</p>
+
+            <div class="code-playground" id="playground10">
+                <div class="playground-header">
+                    <div class="playground-title">Interactive C Playground: Nested Loops (Pattern)</div>
+                    <div class="playground-actions">
+                        <span class="loading-indicator" id="loading10">Compiling...</span>
+                        <button class="run-btn" onclick="runCode('playground10')">Run Code</button>
+                        <button class="reset-btn" onclick="resetCode('playground10')">Reset</button>
+                    </div>
+                </div>
+                <div class="playground-editor">
+                    <textarea id="editor10">
+#include <stdio.h>
+
+int main() {
+    // Print a triangle of stars
+    int size = 5;
+
+    for (int row = 1; row <= size; row++) {
+        for (int col = 1; col <= row; col++) {
+            printf("* ");
+        }
+        printf("\n");
+    }
+
+    return 0;
+}
+</textarea>
+                </div>
+                <div class="playground-output">
+                    <div class="output-label">Output</div>
+                    <div class="output-text output-placeholder">Click "Run Code" to compile and execute...</div>
+                </div>
+            </div>
+
+            <div class="callout-success">
+                <strong>Challenge:</strong> Change the size to 7 and run again. Can you modify the code to print a square instead of a triangle?
+            </div>
+
+            <!-- Section 11: Operators and Shortcuts -->
+            <h2>11. Operators and Shortcuts</h2>
+
+            <p>C provides shorthand operators that make your code more concise.</p>
+
+            <div class="code-playground" id="playground11">
+                <div class="playground-header">
+                    <div class="playground-title">Interactive C Playground: Assignment Operators</div>
+                    <div class="playground-actions">
+                        <span class="loading-indicator" id="loading11">Compiling...</span>
+                        <button class="run-btn" onclick="runCode('playground11')">Run Code</button>
+                        <button class="reset-btn" onclick="resetCode('playground11')">Reset</button>
+                    </div>
+                </div>
+                <div class="playground-editor">
+                    <textarea id="editor11">
+#include <stdio.h>
+
+int main() {
+    int x = 10;
+
+    printf("Starting value: x = %d\n", x);
+
+    x += 5;  // Same as: x = x + 5
+    printf("After x += 5: x = %d\n", x);
+
+    x -= 3;  // Same as: x = x - 3
+    printf("After x -= 3: x = %d\n", x);
+
+    x *= 2;  // Same as: x = x * 2
+    printf("After x *= 2: x = %d\n", x);
+
+    x /= 4;  // Same as: x = x / 4
+    printf("After x /= 4: x = %d\n", x);
+
+    return 0;
+}
+</textarea>
+                </div>
+                <div class="playground-output">
+                    <div class="output-label">Output</div>
+                    <div class="output-text output-placeholder">Click "Run Code" to compile and execute...</div>
+                </div>
+            </div>
+
+            <h3>Increment and Decrement Operators</h3>
+
+            <div class="code-playground" id="playground12">
+                <div class="playground-header">
+                    <div class="playground-title">Interactive C Playground: Increment/Decrement</div>
+                    <div class="playground-actions">
+                        <span class="loading-indicator" id="loading12">Compiling...</span>
+                        <button class="run-btn" onclick="runCode('playground12')">Run Code</button>
+                        <button class="reset-btn" onclick="resetCode('playground12')">Reset</button>
+                    </div>
+                </div>
+                <div class="playground-editor">
+                    <textarea id="editor12">
+#include <stdio.h>
+
+int main() {
+    // Postincrement example
+    int x = 5;
+    printf("x = %d\n", x);
+    printf("x++ returns %d\n", x++);  // Prints 5, then increments
+    printf("Now x = %d\n\n", x);
+
+    // Preincrement example
+    int y = 5;
+    printf("y = %d\n", y);
+    printf("++y returns %d\n", ++y);  // Increments first, then prints
+    printf("Now y = %d\n", y);
+
+    return 0;
+}
+</textarea>
+                </div>
+                <div class="playground-output">
+                    <div class="output-label">Output</div>
+                    <div class="output-text output-placeholder">Click "Run Code" to compile and execute...</div>
+                </div>
+            </div>
+
+            <!-- Section 12: Type Conversion -->
+            <h2>12. Data Types and Type Conversion</h2>
+
+            <p>Sometimes you need to convert between different data types, especially when dividing integers or calculating averages.</p>
+
+            <div class="code-playground" id="playground13">
+                <div class="playground-header">
+                    <div class="playground-title">Interactive C Playground: Integer vs Floating-Point Division</div>
+                    <div class="playground-actions">
+                        <span class="loading-indicator" id="loading13">Compiling...</span>
+                        <button class="run-btn" onclick="runCode('playground13')">Run Code</button>
+                        <button class="reset-btn" onclick="resetCode('playground13')">Reset</button>
+                    </div>
+                </div>
+                <div class="playground-editor">
+                    <textarea id="editor13">
+#include <stdio.h>
+
+int main() {
+    int total = 92;
+    int count = 5;
+
+    // Integer division (decimal part lost)
+    int avg1 = total / count;
+    printf("Integer division: %d / %d = %d\n", total, count, avg1);
+
+    // Type casting for floating-point division
+    double avg2 = (double)total / count;
+    printf("Floating-point division: %d / %d = %.2f\n", total, count, avg2);
+
+    return 0;
+}
+</textarea>
+                </div>
+                <div class="playground-output">
+                    <div class="output-label">Output</div>
+                    <div class="output-text output-placeholder">Click "Run Code" to compile and execute...</div>
+                </div>
+            </div>
+
+            <div class="callout-success">
+                <strong>Key Takeaway:</strong> Cast at least one value to <code>double</code> to preserve decimal places!
+            </div>
+
+            <!-- Section 13: Summary -->
+            <h2>13. Summary: The Seven Control Structures</h2>
+
+            <p>You've learned all seven control structures that form the foundation of structured programming in C. Let's review them:</p>
+
+            <h3>Selection Structures (Choose a Path)</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Structure</th>
+                        <th>When to Use</th>
+                        <th>Example</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>if</code></td>
+                        <td>Execute code only if condition is true</td>
+                        <td>Check if grade is passing</td>
+                    </tr>
+                    <tr>
+                        <td><code>if...else</code></td>
+                        <td>Choose between two alternatives</td>
+                        <td>Pass or fail a student</td>
+                    </tr>
+                    <tr>
+                        <td><code>switch</code></td>
+                        <td>Select from many alternatives</td>
+                        <td>Menu systems, day of week</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Repetition Structures (Repeat Actions)</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Structure</th>
+                        <th>When to Use</th>
+                        <th>Example</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>while</code></td>
+                        <td>Repeat while condition is true (test first)</td>
+                        <td>Process grades until -1 entered</td>
+                    </tr>
+                    <tr>
+                        <td><code>for</code></td>
+                        <td>Repeat a specific number of times</td>
+                        <td>Print numbers 1 to 10</td>
+                    </tr>
+                    <tr>
+                        <td><code>do...while</code></td>
+                        <td>Repeat at least once (test last)</td>
+                        <td>Menu that displays at least once</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Combining Structures (Nesting)</h3>
+
+            <p>You can place any control structure inside any other control structure. This seventh "structure" - nesting - gives you unlimited power to solve complex problems.</p>
+
+            <div class="success-box">
+                <h3>What You've Mastered</h3>
+                <p>You can now:</p>
+                <ul>
+                    <li>✓ Design algorithms using pseudocode and flowcharts</li>
+                    <li>✓ Make decisions with if, if...else, and switch</li>
+                    <li>✓ Repeat actions with while, for, and do...while</li>
+                    <li>✓ Combine conditions with logical operators (&&, ||, !)</li>
+                    <li>✓ Nest structures to solve complex problems</li>
+                    <li>✓ Use shortcuts (+=, ++, --) for cleaner code</li>
+                    <li>✓ Handle integer and floating-point types correctly</li>
+                </ul>
+            </div>
+
+            <h3>Common Pitfalls to Avoid</h3>
+
+            <div class="warning-box">
+                <ul>
+                    <li>❌ Confusing = (assignment) with == (comparison)</li>
+                    <li>❌ Forgetting <code>break</code> in switch statements</li>
+                    <li>❌ Off-by-one errors in loops (< vs <=)</li>
+                    <li>❌ Infinite loops (forgetting to increment counter)</li>
+                    <li>❌ Integer division truncating results</li>
+                    <li>❌ Using floating-point counters in loops</li>
+                    <li>❌ Empty statement after if (semicolon)</li>
+                    <li>❌ Poor indentation making nesting unclear</li>
+                </ul>
+            </div>
+
+            <h3>Next Steps</h3>
+
+            <p>Now that you understand control structures, you're ready to:</p>
+            <ul>
+                <li><strong>Examples:</strong> See these structures in action with complete programs</li>
+                <li><strong>Practice:</strong> Write your own programs using all seven structures</li>
+                <li><strong>Quiz:</strong> Test your understanding with challenging questions</li>
+            </ul>
+
+            <p>Control structures are the building blocks of all programs. Master them, and you can solve any programming problem by breaking it down into sequences, selections, and repetitions.</p>
+
+            <div class="exploration-prompt">
+                <p><strong>Final Challenge:</strong> Before moving to examples, try to write pseudocode for a program that plays a number guessing game. The computer thinks of a number, and the player has 5 tries to guess it. Which control structures would you use?</p>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // Store all editors and original code
+        const editors = {};
+        const originalCode = {};
+
+        // Initialize a CodeMirror editor
+        function initEditor(playgroundId, editorId) {
+            const textarea = document.getElementById(editorId);
+            const editor = CodeMirror.fromTextArea(textarea, {
+                mode: 'text/x-csrc',
+                theme: 'material-ocean',
+                lineNumbers: true,
+                indentUnit: 4,
+                tabSize: 4,
+                indentWithTabs: false,
+                lineWrapping: true,
+                matchBrackets: true,
+                autoCloseBrackets: true
+            });
+
+            editors[playgroundId] = editor;
+            originalCode[playgroundId] = editor.getValue();
+        }
+
+        // Initialize all editors on page load
+        window.addEventListener('DOMContentLoaded', function() {
+            initEditor('playground1', 'editor1');
+            initEditor('playground2', 'editor2');
+            initEditor('playground3', 'editor3');
+            initEditor('playground4', 'editor4');
+            initEditor('playground5', 'editor5');
+            initEditor('playground6', 'editor6');
+            initEditor('playground7', 'editor7');
+            initEditor('playground8', 'editor8');
+            initEditor('playground9', 'editor9');
+            initEditor('playground10', 'editor10');
+            initEditor('playground11', 'editor11');
+            initEditor('playground12', 'editor12');
+            initEditor('playground13', 'editor13');
+        });
+
+        // Run code via Piston API
+        async function runCode(playgroundId) {
+            const editor = editors[playgroundId];
+            const code = editor.getValue();
+            const outputDiv = document.querySelector(`#${playgroundId} .output-text`);
+            const runBtn = document.querySelector(`#${playgroundId} .run-btn`);
+            const loadingIndicator = document.getElementById(playgroundId.replace('playground', 'loading'));
+
+            // Show loading state
+            runBtn.disabled = true;
+            loadingIndicator.classList.add('active');
+            outputDiv.className = 'output-text output-info';
+            outputDiv.textContent = 'Compiling and executing your code...';
+
+            try {
+                // Call Piston API
+                const response = await fetch('https://emkc.org/api/v2/piston/execute', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        language: 'c',
+                        version: '10.2.0',
+                        files: [{
+                            name: 'main.c',
+                            content: code
+                        }],
+                        stdin: '',
+                        args: [],
+                        compile_timeout: 10000,
+                        run_timeout: 3000,
+                        compile_memory_limit: -1,
+                        run_memory_limit: -1
+                    })
+                });
+
+                const result = await response.json();
+
+                // Display results
+                if (result.compile && result.compile.code !== 0) {
+                    // Compilation error
+                    outputDiv.className = 'output-text output-error';
+                    outputDiv.innerHTML = `<div class="output-info">❌ Compilation Error:</div>${escapeHtml(result.compile.stderr || result.compile.output)}`;
+                } else if (result.run) {
+                    // Execution output
+                    if (result.run.code === 0) {
+                        // Success
+                        outputDiv.className = 'output-text output-success';
+                        const output = result.run.stdout || result.run.output || '(no output)';
+                        outputDiv.innerHTML = `<div class="output-info">✅ Executed successfully:</div>${escapeHtml(output)}`;
+                    } else {
+                        // Runtime error
+                        outputDiv.className = 'output-text output-error';
+                        const error = result.run.stderr || result.run.output || 'Runtime error';
+                        outputDiv.innerHTML = `<div class="output-info">❌ Runtime Error (exit code ${result.run.code}):</div>${escapeHtml(error)}`;
+                    }
+                } else {
+                    // Unknown error
+                    outputDiv.className = 'output-text output-error';
+                    outputDiv.textContent = 'Error: Unable to execute code. Please try again.';
+                }
+
+            } catch (error) {
+                // Network or API error
+                outputDiv.className = 'output-text output-error';
+                outputDiv.innerHTML = `<div class="output-info">❌ Error:</div>Failed to connect to compilation service. Please check your internet connection and try again.`;
+                console.error('Piston API error:', error);
+            } finally {
+                // Hide loading state
+                runBtn.disabled = false;
+                loadingIndicator.classList.remove('active');
+            }
+        }
+
+        // Reset code to original
+        function resetCode(playgroundId) {
+            const editor = editors[playgroundId];
+            const outputDiv = document.querySelector(`#${playgroundId} .output-text`);
+
+            editor.setValue(originalCode[playgroundId]);
+            outputDiv.className = 'output-text output-placeholder';
+            outputDiv.textContent = 'Click "Run Code" to compile and execute...';
+        }
+
+        // Escape HTML for safe display
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+    </script>
+
+    <!-- Prism.js for syntax highlighting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-c.min.js"></script>
+
+</body>
+</html>

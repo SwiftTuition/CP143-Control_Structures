@@ -1,0 +1,1416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practice Exercises - Control Structures | CP143</title>
+
+    <!-- Prism.js for Syntax Highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+
+    <!-- CodeMirror for Interactive Playground -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/theme/material-ocean.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/clike/clike.min.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #e2e8f0;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* Navigation */
+        nav {
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 2px solid #0ea5e9;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            text-decoration: none;
+            color: #0ea5e9;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .nav-brand img {
+            height: 40px;
+            width: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #0ea5e9;
+            box-shadow: 0 2px 8px rgba(14, 165, 233, 0.3);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #94a3b8;
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #0ea5e9;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: rgba(30, 41, 59, 0.5);
+            border-radius: 15px;
+            border: 1px solid rgba(14, 165, 233, 0.2);
+        }
+
+        .header h1 {
+            color: #0ea5e9;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            color: #94a3b8;
+            font-size: 1.1rem;
+        }
+
+        /* Download Section */
+        .download-section {
+            background: linear-gradient(135deg, rgba(14, 165, 233, 0.1) 0%, rgba(6, 182, 212, 0.1) 100%);
+            border: 2px solid #0ea5e9;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .download-section h2 {
+            color: #0ea5e9;
+            margin-bottom: 1rem;
+        }
+
+        .download-section p {
+            color: #cbd5e1;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, #0ea5e9 0%, #06b6d4 100%);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(14, 165, 233, 0.3);
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(14, 165, 233, 0.4);
+        }
+
+        .download-btn svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        /* Exercise Card */
+        .exercise {
+            background: rgba(30, 41, 59, 0.5);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            border: 1px solid rgba(14, 165, 233, 0.2);
+            transition: all 0.3s;
+        }
+
+        .exercise:hover {
+            border-color: #0ea5e9;
+            box-shadow: 0 8px 25px rgba(14, 165, 233, 0.2);
+        }
+
+        .exercise-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid rgba(14, 165, 233, 0.3);
+        }
+
+        .exercise-title {
+            color: #0ea5e9;
+            font-size: 1.8rem;
+        }
+
+        .difficulty {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .difficulty.easy {
+            background: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+            border: 1px solid #10b981;
+        }
+
+        .difficulty.medium {
+            background: rgba(245, 158, 11, 0.2);
+            color: #f59e0b;
+            border: 1px solid #f59e0b;
+        }
+
+        .difficulty.hard {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+            border: 1px solid #ef4444;
+        }
+
+        .concepts {
+            margin-bottom: 1.5rem;
+        }
+
+        .concepts h3 {
+            color: #0ea5e9;
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .concept-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .concept-tag {
+            background: rgba(14, 165, 233, 0.1);
+            color: #0ea5e9;
+            padding: 0.4rem 0.8rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            border: 1px solid rgba(14, 165, 233, 0.3);
+        }
+
+        .description {
+            margin-bottom: 1.5rem;
+            color: #cbd5e1;
+            line-height: 1.8;
+        }
+
+        .solution-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .solution-header h3 {
+            color: #10b981;
+            font-size: 1.3rem;
+        }
+
+        .solution-header svg {
+            width: 24px;
+            height: 24px;
+            color: #10b981;
+        }
+
+        /* Code Block Styling */
+        pre[class*="language-"] {
+            border-radius: 10px;
+            border: 1px solid rgba(14, 165, 233, 0.2);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            margin: 1rem 0;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+
+        pre[class*="language-"]::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+
+        pre[class*="language-"]::-webkit-scrollbar-track {
+            background: #1e293b;
+            border-radius: 10px;
+        }
+
+        pre[class*="language-"]::-webkit-scrollbar-thumb {
+            background: #0ea5e9;
+            border-radius: 10px;
+        }
+
+        pre[class*="language-"]::-webkit-scrollbar-thumb:hover {
+            background: #06b6d4;
+        }
+
+        /* Key Points */
+        .key-points {
+            background: rgba(16, 185, 129, 0.1);
+            border-left: 4px solid #10b981;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+        }
+
+        .key-points h4 {
+            color: #10b981;
+            margin-bottom: 1rem;
+        }
+
+        .key-points ul {
+            list-style-position: inside;
+            color: #cbd5e1;
+        }
+
+        .key-points li {
+            margin-bottom: 0.5rem;
+            padding-left: 1rem;
+        }
+
+        /* Code Playground Styles */
+        .code-playground {
+            background: #1e293b;
+            border-radius: 12px;
+            overflow: hidden;
+            margin: 2rem 0;
+            border: 1px solid #334155;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .playground-header {
+            background: #0f172a;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #334155;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .playground-title {
+            color: #0ea5e9;
+            font-weight: 600;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .playground-title::before {
+            content: "⚡";
+            font-size: 1.2rem;
+        }
+
+        .playground-actions {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .run-btn {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            border: none;
+            padding: 0.6rem 1.5rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .run-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+        }
+
+        .run-btn:disabled {
+            background: #64748b;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .run-btn::before {
+            content: "▶";
+            font-size: 1rem;
+        }
+
+        .reset-btn {
+            background: #64748b;
+            color: white;
+            border: none;
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .reset-btn:hover {
+            background: #475569;
+            transform: translateY(-2px);
+        }
+
+        .loading-indicator {
+            display: none;
+            color: #eab308;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .loading-indicator.active {
+            display: block;
+        }
+
+        .playground-editor {
+            background: #0c1222;
+            height: 400px;
+        }
+
+        .CodeMirror {
+            height: 400px !important;
+            font-family: 'Cascadia Code', 'Courier New', monospace;
+            font-size: 14px;
+        }
+
+        .playground-output {
+            background: #0f172a;
+            padding: 1.5rem;
+            border-top: 1px solid #334155;
+            min-height: 120px;
+        }
+
+        .output-label {
+            color: #64748b;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.75rem;
+        }
+
+        .output-text {
+            font-family: 'Cascadia Code', 'Courier New', monospace;
+            font-size: 0.9rem;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            padding: 1rem;
+            border-radius: 6px;
+            border: 1px solid #334155;
+        }
+
+        .output-placeholder {
+            background: #1e293b;
+            color: #64748b;
+        }
+
+        .output-success {
+            background: #142d1f;
+            color: #10b981;
+            border-color: #10b981;
+        }
+
+        .output-error {
+            background: #2d1414;
+            color: #ef4444;
+            border-color: #ef4444;
+        }
+
+        .output-info {
+            color: #cbd5e1;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                gap: 0.5rem;
+                text-align: center;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .exercise-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .container {
+                padding: 0 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="../index.html" class="nav-brand">
+                <img src="swift_tuition_logo.png" alt="Swift Tuition Logo">
+                <span>CP143: Control Structures</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="theory.html">Theory</a></li>
+                <li><a href="examples.html">Examples</a></li>
+                <li><a href="practice.html" class="active">Practice</a></li>
+                <li><a href="quiz.html">Quiz</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>Practice Exercises</h1>
+            <p>Master control structures through hands-on coding challenges</p>
+        </div>
+
+        <!-- Download Section -->
+        <div class="download-section">
+            <h2>📦 Download Exercises</h2>
+            <p>Get all exercise starter files with README instructions and TODO comments</p>
+            <a href="Exercises.zip" class="download-btn" download>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="7 10 12 15 17 10"></polyline>
+                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+                Download All Exercises (ZIP)
+            </a>
+        </div>
+
+        <!-- Exercise 1 -->
+        <div class="exercise">
+            <div class="exercise-header">
+                <h2 class="exercise-title">Exercise 1: Temperature Converter</h2>
+                <span class="difficulty easy">EASY</span>
+            </div>
+
+            <div class="concepts">
+                <h3>Concepts Practiced:</h3>
+                <div class="concept-tags">
+                    <span class="concept-tag">if-else statements</span>
+                    <span class="concept-tag">input validation</span>
+                    <span class="concept-tag">type casting</span>
+                    <span class="concept-tag">arithmetic operations</span>
+                </div>
+            </div>
+
+            <div class="description">
+                <p>Write a program that converts temperatures between Celsius and Fahrenheit with menu selection and validation of inputs including absolute zero limits.</p>
+            </div>
+
+            <div class="solution-header">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+                <h3>Interactive Solution - Try It Out!</h3>
+            </div>
+
+            <div class="code-playground" id="solution1">
+                <div class="playground-header">
+                    <div class="playground-title">Exercise 1: Temperature Converter</div>
+                    <div class="playground-actions">
+                        <span class="loading-indicator">Compiling...</span>
+                        <button class="run-btn" onclick="runCode('solution1')">Run Code</button>
+                        <button class="reset-btn" onclick="resetCode('solution1')">Reset</button>
+                    </div>
+                </div>
+                <div class="playground-editor">
+                    <textarea id="editor-sol1">
+/*
+ * Exercise 1: Temperature Converter - Complete Solution
+ * Demo version with hardcoded test cases
+ */
+
+#include <stdio.h>
+
+int main() {
+    double temperature, converted;
+
+    printf("=== Temperature Converter Demo ===\n");
+    printf("Showing several conversion examples:\n\n");
+
+    // Test Case 1: Celsius to Fahrenheit (valid)
+    printf("--- Test 1: Celsius to Fahrenheit ---\n");
+    temperature = 25.0;
+    printf("Temperature: %.2f°C\n", temperature);
+
+    if (temperature < -273.15) {
+        printf("Error: Below absolute zero!\n");
+    } else {
+        converted = (temperature * 9.0 / 5.0) + 32.0;
+        printf("Converted: %.2f°F\n\n", converted);
+    }
+
+    // Test Case 2: Fahrenheit to Celsius (valid)
+    printf("--- Test 2: Fahrenheit to Celsius ---\n");
+    temperature = 98.6;
+    printf("Temperature: %.2f°F\n", temperature);
+
+    if (temperature < -459.67) {
+        printf("Error: Below absolute zero!\n");
+    } else {
+        converted = (temperature - 32.0) * 5.0 / 9.0;
+        printf("Converted: %.2f°C\n\n", converted);
+    }
+
+    // Test Case 3: Freezing point
+    printf("--- Test 3: Water Freezing Point ---\n");
+    temperature = 0.0;
+    printf("Temperature: %.2f°C\n", temperature);
+    converted = (temperature * 9.0 / 5.0) + 32.0;
+    printf("Converted: %.2f°F\n\n", converted);
+
+    // Test Case 4: Boiling point
+    printf("--- Test 4: Water Boiling Point ---\n");
+    temperature = 100.0;
+    printf("Temperature: %.2f°C\n", temperature);
+    converted = (temperature * 9.0 / 5.0) + 32.0;
+    printf("Converted: %.2f°F\n\n", converted);
+
+    // Test Case 5: Invalid (below absolute zero)
+    printf("--- Test 5: Invalid Temperature ---\n");
+    temperature = -300.0;
+    printf("Temperature: %.2f°C\n", temperature);
+
+    if (temperature < -273.15) {
+        printf("Error: Temperature below absolute zero (-273.15°C)\n\n");
+    }
+
+    printf("Note: In a real program, you'd use scanf() for user input.\n");
+    printf("This demo shows the conversion logic with test data.\n");
+
+    return 0;
+}
+</textarea>
+                </div>
+                <div class="playground-output">
+                    <div class="output-label">Output</div>
+                    <div class="output-text output-placeholder">Click "Run Code" to compile and execute...</div>
+                </div>
+            </div>
+
+            <div class="key-points">
+                <h4>Key Points:</h4>
+                <ul>
+                    <li>Use <code>double</code> for temperature values to preserve decimal precision</li>
+                    <li>Validate menu choice before proceeding with conversion</li>
+                    <li>Check for absolute zero limits: -273.15°C or -459.67°F</li>
+                    <li>Use <code>%.2f</code> format specifier for 2 decimal places</li>
+                    <li>Conversion formulas: F = (C × 9/5) + 32 and C = (F - 32) × 5/9</li>
+                    <li>Return non-zero value (1) on error, 0 on success</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Exercise 2 -->
+        <div class="exercise">
+            <div class="exercise-header">
+                <h2 class="exercise-title">Exercise 2: Grade Statistics Calculator</h2>
+                <span class="difficulty medium">MEDIUM</span>
+            </div>
+
+            <div class="concepts">
+                <h3>Concepts Practiced:</h3>
+                <div class="concept-tags">
+                    <span class="concept-tag">for loops</span>
+                    <span class="concept-tag">counter-controlled repetition</span>
+                    <span class="concept-tag">arithmetic operations</span>
+                    <span class="concept-tag">conditional logic</span>
+                </div>
+            </div>
+
+            <div class="description">
+                <p>Calculate comprehensive statistics for a class including average, highest, lowest, pass/fail counts, and pass percentage.</p>
+            </div>
+
+            <div class="solution-header">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+                <h3>Interactive Solution - Try It Out!</h3>
+            </div>
+
+            <div class="code-playground" id="solution2">
+                <div class="playground-header">
+                    <div class="playground-title">Exercise 2: Grade Statistics Calculator</div>
+                    <div class="playground-actions">
+                        <span class="loading-indicator">Compiling...</span>
+                        <button class="run-btn" onclick="runCode('solution2')">Run Code</button>
+                        <button class="reset-btn" onclick="resetCode('solution2')">Reset</button>
+                    </div>
+                </div>
+                <div class="playground-editor">
+                    <textarea id="editor-sol2">
+/*
+ * Exercise 2: Grade Statistics Calculator - Complete Solution
+ * Demo version with test grade array
+ */
+
+#include <stdio.h>
+
+int main() {
+    // Test data: array of student grades
+    int grades[] = {85, 72, 45, 90, 68, 55, 78, 92, 38, 88};
+    int num_students = 10;
+
+    int total = 0;
+    int highest = 0;
+    int lowest = 101;
+    int passes = 0;
+    int failures = 0;
+    double average, pass_rate;
+
+    // Display header
+    printf("=== Grade Statistics Calculator ===\n");
+    printf("Processing %d student grades...\n\n", num_students);
+
+    // Process each student's grade using for loop
+    for (int i = 0; i < num_students; i++) {
+        int grade = grades[i];
+
+        printf("Student %d: %d", i + 1, grade);
+
+        // Validate grade (0-100)
+        if (grade < 0 || grade > 100) {
+            printf(" - INVALID (skipped)\n");
+            continue;
+        } else {
+            printf(" - valid\n");
+        }
+
+        // Add to total
+        total += grade;
+
+        // Update highest
+        if (grade > highest) {
+            highest = grade;
+        }
+
+        // Update lowest
+        if (grade < lowest) {
+            lowest = grade;
+        }
+
+        // Count pass or failure
+        if (grade >= 50) {
+            passes++;
+        } else {
+            failures++;
+        }
+    }
+
+    // Calculate statistics
+    average = (double)total / num_students;
+    pass_rate = (double)passes / num_students * 100.0;
+
+    // Display all statistics
+    printf("\n=== Grade Statistics ===\n");
+    printf("Class Average: %.2f\n", average);
+    printf("Highest Grade: %d\n", highest);
+    printf("Lowest Grade: %d\n", lowest);
+    printf("Passes: %d\n", passes);
+    printf("Failures: %d\n", failures);
+    printf("Pass Rate: %.2f%%\n", pass_rate);
+
+    printf("\nNote: In a real program, you'd use scanf() to input grades.\n");
+    printf("This demo uses an array of test data to show the logic.\n");
+
+    return 0;
+}
+</textarea>
+                </div>
+                <div class="playground-output">
+                    <div class="output-label">Output</div>
+                    <div class="output-text output-placeholder">Click "Run Code" to compile and execute...</div>
+                </div>
+            </div>
+
+            <div class="key-points">
+                <h4>Key Points:</h4>
+                <ul>
+                    <li>Use for loop for counter-controlled repetition (known number of iterations)</li>
+                    <li>Initialize highest to 0 and lowest to 101 before loop</li>
+                    <li>Use while loop inside for loop to validate each grade</li>
+                    <li>Update multiple tracking variables in single loop (total, highest, lowest, passes, failures)</li>
+                    <li>Cast to double for accurate division: <code>(double)total / num_students</code></li>
+                    <li>Pass rate formula: (passes / total) × 100</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Exercise 3 -->
+        <div class="exercise">
+            <div class="exercise-header">
+                <h2 class="exercise-title">Exercise 3: Number Guessing Game</h2>
+                <span class="difficulty medium">MEDIUM</span>
+            </div>
+
+            <div class="concepts">
+                <h3>Concepts Practiced:</h3>
+                <div class="concept-tags">
+                    <span class="concept-tag">while loops</span>
+                    <span class="concept-tag">do-while loops</span>
+                    <span class="concept-tag">random numbers</span>
+                    <span class="concept-tag">nested loops</span>
+                    <span class="concept-tag">logical operators</span>
+                </div>
+            </div>
+
+            <div class="description">
+                <p>Create an interactive guessing game with hints, attempt tracking, performance ratings, and replay functionality.</p>
+            </div>
+
+            <div class="solution-header">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+                <h3>Interactive Solution - Try It Out!</h3>
+            </div>
+
+            <div class="code-playground" id="solution3">
+                <div class="playground-header">
+                    <div class="playground-title">Exercise 3: Number Guessing Game</div>
+                    <div class="playground-actions">
+                        <span class="loading-indicator">Compiling...</span>
+                        <button class="run-btn" onclick="runCode('solution3')">Run Code</button>
+                        <button class="reset-btn" onclick="resetCode('solution3')">Reset</button>
+                    </div>
+                </div>
+                <div class="playground-editor">
+                    <textarea id="editor-sol3">
+/*
+ * Exercise 3: Number Guessing Game - Complete Solution
+ * Demo version with simulated guesses
+ */
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+int main() {
+    int secret;
+    int attempts;
+
+    // Seed random number generator
+    srand(time(NULL));
+
+    printf("=== Number Guessing Game Demo ===\n");
+    printf("Simulating a guessing game sequence...\n\n");
+
+    // Game 1: Quick win
+    secret = 42;
+    attempts = 0;
+    int guesses1[] = {50, 30, 40, 42};
+    int num_guesses1 = 4;
+
+    printf("--- Game 1 ---\n");
+    printf("Secret number: %d\n", secret);
+    printf("I'm thinking of a number between 1 and 100...\n\n");
+
+    for (int i = 0; i < num_guesses1; i++) {
+        int guess = guesses1[i];
+        printf("Guess #%d: %d\n", i + 1, guess);
+
+        // Validate guess
+        if (guess < 1 || guess > 100) {
+            printf("Error: Guess must be between 1 and 100\n\n");
+            continue;
+        }
+
+        attempts++;
+
+        // Compare guess to secret
+        if (guess < secret) {
+            printf("Too low! Try again.\n\n");
+        } else if (guess > secret) {
+            printf("Too high! Try again.\n\n");
+        } else {
+            printf("Correct! You guessed it!\n\n");
+            break;
+        }
+    }
+
+    printf("You found the number in %d attempts.\n", attempts);
+
+    // Performance rating
+    if (attempts >= 1 && attempts <= 3) {
+        printf("Amazing! You're a mind reader!\n");
+    } else if (attempts >= 4 && attempts <= 7) {
+        printf("Great job! Very good guessing!\n");
+    }
+
+    // Game 2: Show invalid guess handling
+    printf("\n--- Game 2: Invalid Guess Demo ---\n");
+    secret = 75;
+    printf("Secret number: %d\n\n", secret);
+
+    int guesses2[] = {150, 50, 75};  // First guess is invalid
+    for (int i = 0; i < 3; i++) {
+        int guess = guesses2[i];
+        printf("Guess: %d\n", guess);
+
+        if (guess < 1 || guess > 100) {
+            printf("Error: Guess must be between 1 and 100 (not counted)\n\n");
+            continue;
+        }
+
+        if (guess == secret) {
+            printf("Correct!\n");
+            break;
+        } else if (guess < secret) {
+            printf("Too low!\n\n");
+        }
+    }
+
+    printf("\nNote: In a real program, you'd use:\n");
+    printf("- while/do-while loops for interactive guessing\n");
+    printf("- scanf() to get user input\n");
+    printf("- 'play again' option with nested loops\n");
+
+    return 0;
+}
+</textarea>
+                </div>
+                <div class="playground-output">
+                    <div class="output-label">Output</div>
+                    <div class="output-text output-placeholder">Click "Run Code" to compile and execute...</div>
+                </div>
+            </div>
+
+            <div class="key-points">
+                <h4>Key Points:</h4>
+                <ul>
+                    <li>Seed random generator once: <code>srand(time(NULL));</code></li>
+                    <li>Generate random 1-100: <code>(rand() % 100) + 1</code></li>
+                    <li>Use <code>continue</code> to skip counting invalid guesses</li>
+                    <li>Nested loops: outer do-while for replay, inner while for guessing</li>
+                    <li>Space before %c in scanf: <code>" %c"</code> to consume newline</li>
+                    <li>Reset guess variable between games to ensure loop restarts</li>
+                    <li>Use logical OR (||) to accept both 'y' and 'Y'</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Exercise 4 -->
+        <div class="exercise">
+            <div class="exercise-header">
+                <h2 class="exercise-title">Exercise 4: Pattern Printer</h2>
+                <span class="difficulty hard">MEDIUM-HARD</span>
+            </div>
+
+            <div class="concepts">
+                <h3>Concepts Practiced:</h3>
+                <div class="concept-tags">
+                    <span class="concept-tag">nested loops</span>
+                    <span class="concept-tag">switch statements</span>
+                    <span class="concept-tag">pattern recognition</span>
+                    <span class="concept-tag">logical operators</span>
+                </div>
+            </div>
+
+            <div class="description">
+                <p>Print 5 different patterns (triangle, inverted triangle, pyramid, diamond, hollow square) using nested for loops and mathematical relationships.</p>
+            </div>
+
+            <div class="solution-header">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+                <h3>Interactive Solution - Try It Out!</h3>
+            </div>
+
+            <div class="code-playground" id="solution4">
+                <div class="playground-header">
+                    <div class="playground-title">Exercise 4: Pattern Printer</div>
+                    <div class="playground-actions">
+                        <span class="loading-indicator">Compiling...</span>
+                        <button class="run-btn" onclick="runCode('solution4')">Run Code</button>
+                        <button class="reset-btn" onclick="resetCode('solution4')">Reset</button>
+                    </div>
+                </div>
+                <div class="playground-editor">
+                    <textarea id="editor-sol4">
+/*
+ * Exercise 4: Pattern Printer - Complete Solution
+ * Demo version showing all 5 patterns
+ */
+
+#include <stdio.h>
+
+int main() {
+    int size = 5;  // Pattern size
+    int i, j;
+
+    printf("=== Pattern Printer Demo ===\n");
+    printf("Showing all 5 patterns with size = %d\n\n", size);
+
+    // Pattern 1: Right Triangle
+    printf("Pattern 1: Right Triangle\n");
+    for (i = 1; i <= size; i++) {
+        for (j = 1; j <= i; j++) {
+            printf("*");
+        }
+        printf("\n");
+    }
+
+    // Pattern 2: Inverted Right Triangle
+    printf("\nPattern 2: Inverted Right Triangle\n");
+    for (i = 1; i <= size; i++) {
+        for (j = i; j <= size; j++) {
+            printf("*");
+        }
+        printf("\n");
+    }
+
+    // Pattern 3: Pyramid
+    printf("\nPattern 3: Pyramid\n");
+    for (i = 1; i <= size; i++) {
+        // Print leading spaces
+        for (j = 1; j <= size - i; j++) {
+            printf(" ");
+        }
+        // Print stars
+        for (j = 1; j <= 2*i - 1; j++) {
+            printf("*");
+        }
+        printf("\n");
+    }
+
+    // Pattern 4: Diamond
+    printf("\nPattern 4: Diamond\n");
+    // Top half (including middle)
+    for (i = 1; i <= size; i++) {
+        // Print leading spaces
+        for (j = 1; j <= size - i; j++) {
+            printf(" ");
+        }
+        // Print stars
+        for (j = 1; j <= 2*i - 1; j++) {
+            printf("*");
+        }
+        printf("\n");
+    }
+    // Bottom half
+    for (i = size - 1; i >= 1; i--) {
+        // Print leading spaces
+        for (j = 1; j <= size - i; j++) {
+            printf(" ");
+        }
+        // Print stars
+        for (j = 1; j <= 2*i - 1; j++) {
+            printf("*");
+        }
+        printf("\n");
+    }
+
+    // Pattern 5: Hollow Square
+    printf("\nPattern 5: Hollow Square\n");
+    for (i = 1; i <= size; i++) {
+        for (j = 1; j <= size; j++) {
+            // Print star if on border
+            if (i == 1 || i == size || j == 1 || j == size) {
+                printf("*");
+            } else {
+                printf(" ");
+            }
+        }
+        printf("\n");
+    }
+
+    printf("\nNote: In a real program, you'd use:\n");
+    printf("- scanf() for menu choice and size\n");
+    printf("- switch statement to select pattern\n");
+    printf("- Input validation for choice and size\n");
+
+    return 0;
+}
+</textarea>
+                </div>
+                <div class="playground-output">
+                    <div class="output-label">Output</div>
+                    <div class="output-text output-placeholder">Click "Run Code" to compile and execute...</div>
+                </div>
+            </div>
+
+            <div class="key-points">
+                <h4>Key Points:</h4>
+                <ul>
+                    <li><strong>Right Triangle:</strong> Row i has i stars</li>
+                    <li><strong>Inverted Triangle:</strong> Row i has (size - i + 1) stars</li>
+                    <li><strong>Pyramid:</strong> Row i has (size - i) spaces, then (2*i - 1) stars</li>
+                    <li><strong>Diamond:</strong> Combine pyramid (top) + inverted pyramid (bottom)</li>
+                    <li><strong>Hollow Square:</strong> Print stars only on borders (first/last row/column)</li>
+                    <li>Use switch statement for clean menu handling</li>
+                    <li>Nested loops: outer for rows, inner for columns</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Exercise 5 -->
+        <div class="exercise">
+            <div class="exercise-header">
+                <h2 class="exercise-title">Exercise 5: Student Grade Manager</h2>
+                <span class="difficulty hard">HARD</span>
+            </div>
+
+            <div class="concepts">
+                <h3>Concepts Practiced:</h3>
+                <div class="concept-tags">
+                    <span class="concept-tag">do-while loops</span>
+                    <span class="concept-tag">switch statements</span>
+                    <span class="concept-tag">arrays</span>
+                    <span class="concept-tag">menu systems</span>
+                    <span class="concept-tag">comprehensive validation</span>
+                </div>
+            </div>
+
+            <div class="description">
+                <p>Build a complete grade management system with menu-driven interface supporting grade entry, display, statistics, analysis, and pass/fail tracking.</p>
+            </div>
+
+            <div class="solution-header">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+                <h3>Interactive Solution - Try It Out!</h3>
+            </div>
+
+            <div class="code-playground" id="solution5">
+                <div class="playground-header">
+                    <div class="playground-title">Exercise 5: Student Grade Manager</div>
+                    <div class="playground-actions">
+                        <span class="loading-indicator">Compiling...</span>
+                        <button class="run-btn" onclick="runCode('solution5')">Run Code</button>
+                        <button class="reset-btn" onclick="resetCode('solution5')">Reset</button>
+                    </div>
+                </div>
+                <div class="playground-editor">
+                    <textarea id="editor-sol5">
+/*
+ * Exercise 5: Student Grade Manager - Complete Solution
+ * Demo version with simulated menu actions
+ */
+
+#include <stdio.h>
+
+int main() {
+    int grades[30] = {85, 72, 90, 55, 78, 92, 68, 45, 88, 95};
+    int num_students = 10;
+    int i;
+    int total, highest, lowest, highest_student, lowest_student;
+    int passes, failures;
+    double average, pass_rate;
+
+    printf("=== Student Grade Manager Demo ===\n");
+    printf("Demonstrating all menu features with test data\n\n");
+
+    // Simulate Action 1: Enter grades (already loaded)
+    printf("--- Action 1: Enter Grades ---\n");
+    printf("Loaded %d student grades: ", num_students);
+    for (i = 0; i < num_students; i++) {
+        printf("%d ", grades[i]);
+    }
+    printf("\n[OK] %d grades entered successfully!\n", num_students);
+
+    // Action 2: Display all grades
+    printf("\n--- Action 2: Display All Grades ---\n");
+    printf("Student #   Grade\n");
+    printf("---------   -----\n");
+    for (i = 0; i < num_students; i++) {
+        printf("%-9d   %d\n", i + 1, grades[i]);
+    }
+
+    // Action 3: Calculate Statistics
+    printf("\n--- Action 3: Class Statistics ---\n");
+    total = 0;
+    for (i = 0; i < num_students; i++) {
+        total += grades[i];
+    }
+    average = (double)total / num_students;
+
+    printf("Number of Students: %d\n", num_students);
+    printf("Total Points: %d\n", total);
+    printf("Average Grade: %.2f\n", average);
+
+    // Action 4: Find Highest and Lowest
+    printf("\n--- Action 4: Highest and Lowest ---\n");
+    highest = -1;
+    lowest = 101;
+    highest_student = 0;
+    lowest_student = 0;
+
+    for (i = 0; i < num_students; i++) {
+        if (grades[i] > highest) {
+            highest = grades[i];
+            highest_student = i + 1;
+        }
+        if (grades[i] < lowest) {
+            lowest = grades[i];
+            lowest_student = i + 1;
+        }
+    }
+
+    printf("Highest: %d (Student #%d)\n", highest, highest_student);
+    printf("Lowest: %d (Student #%d)\n", lowest, lowest_student);
+
+    // Action 5: Count Pass/Fail
+    printf("\n--- Action 5: Pass/Fail Analysis ---\n");
+    passes = 0;
+    failures = 0;
+
+    for (i = 0; i < num_students; i++) {
+        if (grades[i] >= 50) {
+            passes++;
+        } else {
+            failures++;
+        }
+    }
+
+    pass_rate = (double)passes / num_students * 100.0;
+
+    printf("Passes (>= 50): %d (%.2f%%)\n", passes, pass_rate);
+    printf("Failures (< 50): %d (%.2f%%)\n", failures, 100.0 - pass_rate);
+
+    printf("\n--- Action 6: Exit ---\n");
+    printf("Thank you for using Grade Manager!\n");
+
+    printf("\n=== Implementation Notes ===\n");
+    printf("In a real program, you'd use:\n");
+    printf("- do-while loop for main menu\n");
+    printf("- Nested do-while for menu validation\n");
+    printf("- switch statement for menu options\n");
+    printf("- scanf() for user input\n");
+    printf("- Arrays to store up to 30 grades\n");
+    printf("- Choice 6 to exit the menu loop\n");
+
+    return 0;
+}
+</textarea>
+                </div>
+                <div class="playground-output">
+                    <div class="output-label">Output</div>
+                    <div class="output-text output-placeholder">Click "Run Code" to compile and execute...</div>
+                </div>
+            </div>
+
+            <div class="key-points">
+                <h4>Key Points:</h4>
+                <ul>
+                    <li>Use do-while for main menu loop (executes at least once)</li>
+                    <li>Nested do-while for menu validation ensures valid choice</li>
+                    <li>Array indices (0-29) vs student numbers (1-30) - be careful!</li>
+                    <li>Check <code>num_students == 0</code> before processing data</li>
+                    <li>Initialize highest to -1, lowest to 101 for proper comparison</li>
+                    <li>Track student number when finding highest/lowest</li>
+                    <li>Use <code>%-9d</code> for left-aligned column formatting</li>
+                    <li>Reset <code>num_students</code> to 0 if validation fails</li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Piston Playground JavaScript -->
+    <script>
+        // Store all editors and original code
+        const editors = {};
+        const originalCode = {};
+
+        // Initialize a CodeMirror editor
+        function initEditor(playgroundId, editorId) {
+            const textarea = document.getElementById(editorId);
+            if (!textarea) return; // Skip if editor doesn't exist yet
+
+            const editor = CodeMirror.fromTextArea(textarea, {
+                mode: 'text/x-csrc',
+                theme: 'material-ocean',
+                lineNumbers: true,
+                indentUnit: 4,
+                tabSize: 4,
+                indentWithTabs: false,
+                lineWrapping: true,
+                matchBrackets: true,
+                autoCloseBrackets: true
+            });
+
+            editors[playgroundId] = editor;
+            originalCode[playgroundId] = editor.getValue();
+        }
+
+        // Initialize all editors on page load
+        window.addEventListener('DOMContentLoaded', function() {
+            // Initialize editors for each solution (will be created below)
+            initEditor('solution1', 'editor-sol1');
+            initEditor('solution2', 'editor-sol2');
+            initEditor('solution3', 'editor-sol3');
+            initEditor('solution4', 'editor-sol4');
+            initEditor('solution5', 'editor-sol5');
+        });
+
+        // Run code via Piston API
+        async function runCode(playgroundId) {
+            const editor = editors[playgroundId];
+            const code = editor.getValue();
+            const outputDiv = document.querySelector(`#${playgroundId} .output-text`);
+            const runBtn = document.querySelector(`#${playgroundId} .run-btn`);
+            const loadingDiv = document.querySelector(`#${playgroundId} .loading-indicator`);
+
+            // Show loading state
+            runBtn.disabled = true;
+            if (loadingDiv) loadingDiv.classList.add('active');
+            outputDiv.className = 'output-text output-info';
+            outputDiv.textContent = 'Compiling and executing your code...';
+
+            try {
+                // Call Piston API
+                const response = await fetch('https://emkc.org/api/v2/piston/execute', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        language: 'c',
+                        version: '10.2.0',
+                        files: [{
+                            name: 'main.c',
+                            content: code
+                        }],
+                        stdin: '',
+                        args: [],
+                        compile_timeout: 10000,
+                        run_timeout: 3000,
+                        compile_memory_limit: -1,
+                        run_memory_limit: -1
+                    })
+                });
+
+                const result = await response.json();
+
+                // Display results
+                if (result.compile && result.compile.code !== 0) {
+                    // Compilation error
+                    outputDiv.className = 'output-text output-error';
+                    outputDiv.innerHTML = `<div class="output-info">❌ Compilation Error:</div>${escapeHtml(result.compile.stderr || result.compile.output)}`;
+                } else if (result.run) {
+                    // Execution output
+                    if (result.run.code === 0) {
+                        // Success
+                        outputDiv.className = 'output-text output-success';
+                        const output = result.run.stdout || result.run.output || '(no output)';
+                        outputDiv.innerHTML = `<div class="output-info">✅ Executed successfully:</div>${escapeHtml(output)}`;
+                    } else {
+                        // Runtime error
+                        outputDiv.className = 'output-text output-error';
+                        const error = result.run.stderr || result.run.output || 'Runtime error';
+                        outputDiv.innerHTML = `<div class="output-info">❌ Runtime Error (exit code ${result.run.code}):</div>${escapeHtml(error)}`;
+                    }
+                } else {
+                    // Unknown error
+                    outputDiv.className = 'output-text output-error';
+                    outputDiv.textContent = 'Error: Unable to execute code. Please try again.';
+                }
+
+            } catch (error) {
+                // Network or API error
+                outputDiv.className = 'output-text output-error';
+                outputDiv.innerHTML = `<div class="output-info">❌ Error:</div>Failed to connect to compilation service. Please check your internet connection and try again.`;
+                console.error('Piston API error:', error);
+            } finally {
+                // Hide loading state
+                runBtn.disabled = false;
+                if (loadingDiv) loadingDiv.classList.remove('active');
+            }
+        }
+
+        // Reset code to original
+        function resetCode(playgroundId) {
+            const editor = editors[playgroundId];
+            const outputDiv = document.querySelector(`#${playgroundId} .output-text`);
+
+            editor.setValue(originalCode[playgroundId]);
+            outputDiv.className = 'output-text output-placeholder';
+            outputDiv.textContent = 'Click "Run Code" to compile and execute...';
+        }
+
+        // Escape HTML for safe display
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+    </script>
+
+    <!-- Prism.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-c.min.js"></script>
+</body>
+</html>
