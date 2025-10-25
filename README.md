@@ -137,7 +137,7 @@ The quiz (`quiz.html`) contains **50 questions** covering:
 ## 📋 File Structure
 
 ```
-cp143-control-structures/
+cp143-control_structures/
 ├── README.md                    # This file
 ├── theory.html                  # Complete theory notes
 ├── examples.html                # Interactive examples
